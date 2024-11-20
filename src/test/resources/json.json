@@ -1,0 +1,20 @@
+{
+  "login" : "@MASKED@",
+  "password" : "@XXX@",
+  "year" : 20,
+  "map2" : {
+    "Map-Boolean" : false,
+    "Map-User" : "#ERR-MAP",
+    "Map-Character" : "M",
+    "Map-String" : "string",
+    "Map-Integer" : 2,
+    "Map-List" : [ "Map-List-bla", "Map-List-ble", "Map-List-bli" ],
+    "Map-Map" : {
+      "Map-Map-bla" : "bla"
+    },
+    "Map-Double" : 2.22
+  },
+  "list2" : [ 1, "string", 1.11, true, "L", {
+    "List-Map-bla" : "bla"
+  }, null, "#ERR-LIST" ]
+}
