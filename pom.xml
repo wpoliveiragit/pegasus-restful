@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>br.com.projeto.crud</groupId>
-	<artifactId>crud</artifactId>
+	<artifactId>pegasus-restful</artifactId>
 	<version>0.0.1</version>
-	<name>crud</name>
-	<description>Projeto CRUD para teste</description>
+	<name>pegasus-restful</name>
+	<description>Projeto backend RESTful</description>
 
 	<properties>
 		<java.version>17</java.version>
