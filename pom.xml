@@ -93,6 +93,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency> <!-- CREATE ANNOTATION-->
+			<groupId>br.com.pegasus.lib</groupId>
+			<artifactId>pegasus-lib-backend</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -120,5 +125,12 @@
 
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/wpoliveiragit/maven-repository</url>
+		</repository>
+	</distributionManagement>
 
 </project>
