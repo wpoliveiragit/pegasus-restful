@@ -1,4 +1,4 @@
-package br.com.projeto.crud.domain.model;
+package br.com.projeto.crud.infra.repository.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,10 +9,8 @@ import lombok.Setter;
 import other.AppUtil;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "TB_USER")
-public class UserModel {
+public @Getter @Setter class UserEntity {
 
 	@Id
 	@NotBlank(message = "O login esta em branco!")

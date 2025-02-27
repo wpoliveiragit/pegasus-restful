@@ -1,4 +1,4 @@
-package br.com.projeto.crud.domain.DTO;
+package br.com.projeto.crud.app.dto;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -7,17 +7,19 @@ import lombok.Getter;
 import lombok.Setter;
 import other.AppUtil;
 
-public @Getter @Setter class UnauthorizedAccessResponse {
+public @Getter @Setter class AppResponseDto {
 
 	private String timestamp;
-	private String message; // acesso negado ou acesso não permitido
-	private String description;// exception.getmessage
+	private String message;
+	private int code;
 
-	public UnauthorizedAccessResponse(Exception ex, String message) {
+	private Object data;
+
+	public AppResponseDto(int code, String message, Object data) {
 		this.timestamp = DateTimeFormatter.ISO_INSTANT.format(Instant.ofEpochMilli(System.currentTimeMillis()));
-		this.description = ex.getMessage();
+		this.code = code;
 		this.message = message;
-
+		this.data = data;
 	}
 
 	@Override

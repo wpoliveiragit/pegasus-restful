@@ -5,8 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.projeto.crud.infra.utils.SuportUtils;
+import other.AppUtil;
 
+
+//TODO: Provavelmente n esta sendo usado
 public interface RequestMapper {
 	RequestMapper INSTANCE = new RequestMapper() {
 	};
@@ -18,7 +20,10 @@ public interface RequestMapper {
 		ret.put("message", message);
 		ret.put("data", data);
 
-		return SuportUtils.GSON.toJson(ret);
+		return AppUtil.GSON.toJson(ret);
 	}
 
 }
+
+
+
