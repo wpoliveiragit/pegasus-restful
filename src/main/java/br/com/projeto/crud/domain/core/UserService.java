@@ -21,7 +21,8 @@ public class UserService implements UserServicePort {
 
 	@Override
 	public UserModel findById(String login) {
-		return userPersistence.findById(login).orElseThrow(() -> new NotFoundException());
+		return userPersistence.findById(login)//
+				.orElseThrow(() -> new NotFoundException());
 	}
 
 	@Override
@@ -35,17 +36,13 @@ public class UserService implements UserServicePort {
 	@Override
 	public UserModel update(UserModel model) {
 		return userPersistence.findById(model.getLogin())//
-				.map(m -> {
-					return userPersistence.update(model);
-				}).orElseThrow(//
-						() -> new NotFoundException());
+				.map(m -> userPersistence.update(model)).orElseThrow(NotFoundException::new);
 	}
 
 	@Override
 	public void delete(String login) {
-		userPersistence.findById(login).ifPresentOrElse(//
-				model -> userPersistence.delete(model.getLogin()), //
-				() -> new NotFoundException());
+		userPersistence.findById(login)//
+				.ifPresentOrElse(model -> userPersistence.delete(model.getLogin()), NotFoundException::new);
 	}
 
 }

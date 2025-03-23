@@ -3,11 +3,13 @@ package br.com.projeto.crud.domain.DTO;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
+import br.com.projeto.crud.infra.util.MethodUtil;
 import lombok.Getter;
 import lombok.Setter;
-import other.AppUtil;
 
-public @Getter @Setter class UnauthorizedAccessResponse {
+@Getter
+@Setter
+public class UnauthorizedAccessResponse {
 
 	private String timestamp;
 	private String message; // acesso negado ou acesso não permitido
@@ -22,6 +24,6 @@ public @Getter @Setter class UnauthorizedAccessResponse {
 
 	@Override
 	public String toString() {
-		return AppUtil.GSON.toJson(this);
+		return MethodUtil.convertToJsonMaskValues(this);
 	}
 }

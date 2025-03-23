@@ -1,41 +1,20 @@
 package br.com.projeto.crud.infra.mapper;
 
+import org.mapstruct.Mapper;
+
 import br.com.projeto.crud.app.dto.ItemCreateBodyDto;
 import br.com.projeto.crud.app.dto.ItemUpdateBodyDto;
 import br.com.projeto.crud.domain.model.ItemModel;
 import br.com.projeto.crud.infra.repository.entity.ItemEntity;
 
+@Mapper(componentModel = "spring")
 public interface ItemMapper {
 
-	ItemMapper INSTANCE = new ItemMapper() {
-	};
+	ItemModel toModel(ItemCreateBodyDto request);
 
-	default ItemEntity toEntity(ItemModel model) {
-		ItemEntity entity = new ItemEntity();
-		entity.setId(model.getId());
-		entity.setName(model.getName());
-		return entity;
-	}
+	ItemModel toModel(ItemUpdateBodyDto request);
 
-	default ItemModel toModel(ItemEntity entity) {
-		ItemModel model = new ItemModel();
-		model.setId(entity.getId());
-		model.setName(entity.getName());
-		return model;
-	}
-	
-	default ItemModel toModel(ItemCreateBodyDto request) {
-		ItemModel model = new ItemModel();
-		model.setId(request.getId());
-		model.setName(request.getName());
-		return model;
-	}
-	
-	default ItemModel toModel(ItemUpdateBodyDto request) {
-		ItemModel model = new ItemModel();
-		model.setId(request.getId());
-		model.setName(request.getName());
-		return model;
-	}
+	ItemEntity toEntity(ItemModel model);
 
+	ItemModel toModel(ItemEntity entity);
 }

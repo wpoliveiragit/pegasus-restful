@@ -239,3 +239,4 @@ $RECYCLE.BIN/
 *.old
 
 # End of ignore file
+/.apt_generated_tests/

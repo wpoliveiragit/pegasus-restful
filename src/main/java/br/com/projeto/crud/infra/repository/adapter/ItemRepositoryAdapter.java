@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class ItemRepositoryAdapter implements ItemPersistenceAdapter {
 
 	private final ItemRepository itemRepository;
-	private ItemMapper mapper = ItemMapper.INSTANCE;
+	private final ItemMapper mapper;
 
 	@Override
 	public List<ItemModel> findAll() {

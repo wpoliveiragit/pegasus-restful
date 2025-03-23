@@ -21,7 +21,7 @@ public class ItemService implements ItemServicePort {
 
 	@Override
 	public ItemModel findById(Long id) {
-		return itemPersistence.findById(id).orElseThrow(() -> new NotFoundException());
+		return itemPersistence.findById(id).orElseThrow(NotFoundException::new);
 	}
 
 	@Override
@@ -35,16 +35,13 @@ public class ItemService implements ItemServicePort {
 	@Override
 	public ItemModel update(ItemModel model) {
 		return itemPersistence.findById(model.getId())//
-				.map(m -> {
-					return itemPersistence.update(model);
-				}).orElseThrow(//
-						() -> new NotFoundException());
+				.map(m -> itemPersistence.update(model))//
+				.orElseThrow(NotFoundException::new);
 	}
 
 	@Override
 	public void delete(Long id) {
 		itemPersistence.findById(id).ifPresentOrElse(//
-				model -> itemPersistence.delete(model.getId()), //
-				() -> new NotFoundException());
+				model -> itemPersistence.delete(model.getId()), NotFoundException::new);
 	}
 }

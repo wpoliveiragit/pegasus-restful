@@ -9,6 +9,6 @@ import br.com.projeto.crud.infra.repository.entity.ItemEntity;
 
 @Repository
 public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
-	
+
 	Optional<ItemEntity> findByName(String name);
 }

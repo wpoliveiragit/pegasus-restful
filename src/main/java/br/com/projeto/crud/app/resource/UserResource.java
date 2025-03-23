@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class UserResource {
 
 	private final UserServicePort userService;
-	private UserMapper mapper = UserMapper.INSTANCE;
+	private UserMapper mapper = UserMapper.getInstance();
 	private ResponseFactory resp = new ResponseFactory();
 
 	public ResponseEntity<?> findAll() {

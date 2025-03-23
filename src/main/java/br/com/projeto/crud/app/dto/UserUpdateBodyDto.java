@@ -2,11 +2,13 @@ package br.com.projeto.crud.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.projeto.crud.infra.util.MethodUtil;
 import lombok.Getter;
 import lombok.Setter;
-import other.AppUtil;
 
-public @Getter @Setter class UserUpdateBodyDto {
+@Getter
+@Setter
+public class UserUpdateBodyDto {
 
 	@JsonIgnore
 	private String login;
@@ -15,7 +17,7 @@ public @Getter @Setter class UserUpdateBodyDto {
 
 	@Override
 	public String toString() {
-		return AppUtil.GSON.toJson(this);
+		return MethodUtil.convertToJsonMaskValues(this);
 	}
 
 }

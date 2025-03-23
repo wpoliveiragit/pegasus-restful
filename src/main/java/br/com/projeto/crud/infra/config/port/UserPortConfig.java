@@ -1,4 +1,4 @@
-package br.com.projeto.crud.infra.config;
+package br.com.projeto.crud.infra.config.port;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import br.com.projeto.crud.infra.repository.UserRepository;
 import br.com.projeto.crud.infra.repository.adapter.UserRepositoryAdapter;
 
 @Component
-public class UserConfig {
+public class UserPortConfig {
 
 	@Bean
 	public UserServicePort createUserService(UserRepository userRepository) {

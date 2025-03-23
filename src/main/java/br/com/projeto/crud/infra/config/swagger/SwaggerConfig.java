@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityScheme.Type;
 
 @Configuration
 @SecurityScheme(name = "basicAuth", type = SecuritySchemeType.HTTP, scheme = "basic")
@@ -18,16 +19,21 @@ import io.swagger.v3.oas.models.OpenAPI;
 		security = { @SecurityRequirement(name = "basicAuth") })
 public class SwaggerConfig {
 
+	private static final String BASIC_AUTH = "basicAuth";
+	private static final String BASIC = "basic";
+
 	@Bean
 	public OpenAPI customOpenAPI() {
-		OpenAPI openApi = new OpenAPI().components(//
-				new Components().addSecuritySchemes(//
-						"basicAuth",
-						new io.swagger.v3.oas.models.security.SecurityScheme()
-								.type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)//
-								.scheme("basic")))
-				.addSecurityItem(new io.swagger.v3.oas.models.security.SecurityRequirement().addList("basicAuth"));
-		return openApi;
+		var secReq = new io.swagger.v3.oas.models.security.SecurityRequirement();
+
+		return new OpenAPI().components(createComponents()).addSecurityItem(secReq.addList(BASIC_AUTH));
+	}
+
+	private Components createComponents() {
+		Type http = io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP;
+		var securityScheme = new io.swagger.v3.oas.models.security.SecurityScheme();
+
+		return new Components().addSecuritySchemes(BASIC_AUTH, securityScheme.type(http).scheme(BASIC));
 	}
 
 }

@@ -17,21 +17,19 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import br.com.projeto.crud.app.controller.UserController;
 import br.com.projeto.crud.infra.repository.UserRepository;
 import br.com.projeto.crud.infra.repository.entity.UserEntity;
+import br.com.projeto.crud.infra.util.TXTUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
-public class CreateBeansSecurity implements MethodSecurity {
+public class CreateBeansSecurity extends MethodSecurity {
 
 	private final UserRepository userPersistence;
 
 	@PostConstruct
-	public void loadUserData() {
-		UserEntity entity = new UserEntity();
-		entity.setLogin("root");
-		entity.setPasswaord("root");
-		userPersistence.save(entity);
+	public void init() {
+		addRootUser(userPersistence, "root", "root");
 	}
 
 	@Bean
@@ -41,24 +39,36 @@ public class CreateBeansSecurity implements MethodSecurity {
 
 	@Bean
 	public SecurityFilterChain createSecurityFilterChain(HttpSecurity http, Environment env) throws Exception {
-		String[] array = Stream.of(SWAGGER_PATHS, getControllerPaths(UserController.class))//
-				.flatMap(Arrays::stream).toArray(String[]::new);
+		String[] array = Stream.of(TXTUtil.SWAGGER_PATHS_ARRAY, super.getControllerPaths(UserController.class))//
+				.flatMap(Arrays::stream)//
+				.toArray(String[]::new);
 
 		http.addFilterBefore(oncePerRequestFilter(), BasicAuthenticationFilter.class);
 
 		SecurityFilterChain ret = http.httpBasic(Customizer.withDefaults()).csrf(csrf -> csrf.disable())//
-				.authorizeHttpRequests(authorizeRequests -> {// REMOVE AUTHORIZATION APENAS PARA AS ROTAS DA LISTA
-					authorizeRequests.requestMatchers(array).permitAll().anyRequest().authenticated();
-				})
+				.authorizeHttpRequests(// REMOVE AUTHORIZATION APENAS PARA AS ROTAS DA LISTA
+						authorizeRequests -> authorizeRequests.requestMatchers(array).permitAll().anyRequest()
+								.authenticated())
 				.exceptionHandling(
-						exHandling -> exHandling.authenticationEntryPoint(unauthorizedAccessHandlerResponse()))//
+						exHandling -> exHandling.authenticationEntryPoint(super.unauthorizedAccessHandlerResponse()))//
 				.build();
 		return ret;
 	}
 
 	@Bean
 	public UserDetailsService userDetailsService(BCryptPasswordEncoder crypt) {
-		return createUserDetailsService(crypt, userPersistence);
+		/**
+		 * Busca os dados do login enviado por parametro, caso exista, criptografa o
+		 * password obtido e gera um logon de verificação com o enviado.
+		 */
+		return userName -> {
+			try {
+				UserEntity user = userPersistence.findById(userName).map(e -> e).orElseThrow(RuntimeException::new);
+				return super.createUserDetails(userName, crypt.encode(user.getPasswaord()));
+			} catch (Exception ex) {
+				return super.createUserDetails(userName, "fail");
+			}
+		};
 	}
 
 }
