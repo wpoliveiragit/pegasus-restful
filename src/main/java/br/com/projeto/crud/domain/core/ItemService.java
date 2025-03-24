@@ -3,10 +3,10 @@ package br.com.projeto.crud.domain.core;
 import java.util.List;
 
 import br.com.projeto.crud.domain.adapter.ItemPersistenceAdapter;
-import br.com.projeto.crud.domain.exception.ConflictException;
-import br.com.projeto.crud.domain.exception.NotFoundException;
-import br.com.projeto.crud.domain.model.ItemModel;
 import br.com.projeto.crud.domain.port.ItemServicePort;
+import br.com.projeto.crud.infra.exception.ConflictException;
+import br.com.projeto.crud.infra.exception.NotFoundException;
+import br.com.projeto.crud.infra.model.ItemModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

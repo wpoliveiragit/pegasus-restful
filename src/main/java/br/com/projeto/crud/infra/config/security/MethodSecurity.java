@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.com.projeto.crud.infra.factory.ResponseFactory;
-import br.com.projeto.crud.infra.repository.UserRepository;
-import br.com.projeto.crud.infra.repository.entity.UserEntity;
+import br.com.projeto.crud.infra.provider.UserRepository;
+import br.com.projeto.crud.infra.provider.entity.UserEntity;
 import br.com.projeto.crud.infra.util.MethodUtil;
 import br.com.projeto.crud.infra.util.TXTUtil;
 import jakarta.servlet.FilterChain;

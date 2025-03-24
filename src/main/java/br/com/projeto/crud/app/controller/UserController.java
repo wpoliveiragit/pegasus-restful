@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.projeto.crud.app.dto.UserCreateBodyDto;
-import br.com.projeto.crud.app.dto.UserUpdateBodyDto;
 import br.com.projeto.crud.app.resource.UserResource;
+import br.com.projeto.crud.infra.dto.UserCreateBodyDto;
+import br.com.projeto.crud.infra.dto.UserUpdateBodyDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

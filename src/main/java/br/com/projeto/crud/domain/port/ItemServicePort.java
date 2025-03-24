@@ -2,7 +2,7 @@ package br.com.projeto.crud.domain.port;
 
 import java.util.List;
 
-import br.com.projeto.crud.domain.model.ItemModel;
+import br.com.projeto.crud.infra.model.ItemModel;
 
 public interface ItemServicePort {
 

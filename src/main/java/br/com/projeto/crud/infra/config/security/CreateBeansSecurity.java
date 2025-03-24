@@ -15,8 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import br.com.projeto.crud.app.controller.UserController;
-import br.com.projeto.crud.infra.repository.UserRepository;
-import br.com.projeto.crud.infra.repository.entity.UserEntity;
+import br.com.projeto.crud.infra.provider.UserRepository;
+import br.com.projeto.crud.infra.provider.entity.UserEntity;
 import br.com.projeto.crud.infra.util.TXTUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.projeto.crud.app.dto.AdviceResponse;
-import br.com.projeto.crud.domain.exception.ConflictException;
-import br.com.projeto.crud.domain.exception.NotFoundException;
+import br.com.projeto.crud.infra.dto.AdviceResponse;
+import br.com.projeto.crud.infra.exception.ConflictException;
+import br.com.projeto.crud.infra.exception.NotFoundException;
 import br.com.projeto.crud.infra.type.StatusType;
 
 @ControllerAdvice

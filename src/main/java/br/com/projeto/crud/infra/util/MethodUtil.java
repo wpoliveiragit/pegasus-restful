@@ -3,11 +3,7 @@ package br.com.projeto.crud.infra.util;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import br.com.projeto.crud.infra.annotation.mask.ValueMask;
 
 public final class MethodUtil {
 
@@ -29,16 +25,7 @@ public final class MethodUtil {
 		CONVERT_TO_JSON_MAPPER = new ObjectMapper();
 		CONVERT_TO_JSON_MAPPER.registerModule(new JavaTimeModule());
 		CONVERT_TO_JSON_MAPPER.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-		CONVERT_TO_JSON_MAPPER.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
-			private static final long serialVersionUID = 1L;
 
-			@Override // APENAS IGNORA AS ANOTAÇÕES
-			public Object findSerializer(Annotated a) {
-				// add '|| a.hasAnnotation(nameAnnotation.class)' em result
-				boolean result = a.hasAnnotation(ValueMask.class);
-				return result ? null : super.findSerializer(a);
-			}
-		});
 	}
 
 	public static final String convertToJsonMaskValues(Object obj) {

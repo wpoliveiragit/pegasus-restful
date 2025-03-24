@@ -3,7 +3,7 @@ package br.com.projeto.crud.domain.adapter;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.projeto.crud.domain.model.ItemModel;
+import br.com.projeto.crud.infra.model.ItemModel;
 
 public interface ItemPersistenceAdapter {
 

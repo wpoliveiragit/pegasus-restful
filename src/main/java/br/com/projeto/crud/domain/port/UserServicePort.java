@@ -2,7 +2,7 @@ package br.com.projeto.crud.domain.port;
 
 import java.util.List;
 
-import br.com.projeto.crud.domain.model.UserModel;
+import br.com.projeto.crud.infra.model.UserModel;
 
 public interface UserServicePort {
 

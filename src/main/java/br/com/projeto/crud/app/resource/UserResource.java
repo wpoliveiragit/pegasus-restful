@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import br.com.projeto.crud.app.dto.UserCreateBodyDto;
-import br.com.projeto.crud.app.dto.UserUpdateBodyDto;
-import br.com.projeto.crud.domain.model.UserModel;
 import br.com.projeto.crud.domain.port.UserServicePort;
+import br.com.projeto.crud.infra.config.mapper.UserMapper;
+import br.com.projeto.crud.infra.dto.UserCreateBodyDto;
+import br.com.projeto.crud.infra.dto.UserUpdateBodyDto;
 import br.com.projeto.crud.infra.factory.ResponseFactory;
-import br.com.projeto.crud.infra.mapper.UserMapper;
+import br.com.projeto.crud.infra.model.UserModel;
 import lombok.RequiredArgsConstructor;
 
 @Component
