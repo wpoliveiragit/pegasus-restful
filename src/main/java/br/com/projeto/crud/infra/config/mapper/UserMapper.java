@@ -2,8 +2,8 @@ package br.com.projeto.crud.infra.config.mapper;
 
 import org.mapstruct.Mapper;
 
-import br.com.projeto.crud.infra.dto.UserCreateBodyDto;
-import br.com.projeto.crud.infra.dto.UserUpdateBodyDto;
+import br.com.projeto.crud.infra.dto.UserCreateBodyDTO;
+import br.com.projeto.crud.infra.dto.UserUpdateBodyDTO;
 import br.com.projeto.crud.infra.model.UserModel;
 import br.com.projeto.crud.infra.provider.entity.UserEntity;
 
@@ -14,8 +14,8 @@ public interface UserMapper {
 
 	UserModel toModel(UserEntity entity);
 
-	UserModel toModel(UserCreateBodyDto dto);
+	UserModel toModel(UserCreateBodyDTO dto);
 
-	UserModel toModel(UserUpdateBodyDto dto);
+	UserModel toModel(UserUpdateBodyDTO dto);
 
 }

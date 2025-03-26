@@ -25,9 +25,9 @@ public class ItemEntity {
 	@Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 10 caracteres.")
 	private String name;
 
-	@Override
-	public String toString() {
-		return MethodUtil.convertToJsonMaskValues(this);
-	}
+//	@Override
+//	public String toString() {
+//		return MethodUtil.convertToJsonMaskValues(this);
+//	}
 
 }

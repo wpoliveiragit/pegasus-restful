@@ -8,15 +8,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserUpdateBodyDto {
+public class UserUpdateBodyDTO {
 
 	@JsonIgnore
 	private String login;
 	private String passwaord;
 
-	@Override
-	public String toString() {
-		return MethodUtil.convertToJsonMaskValues(this);
-	}
+//	@Override
+//	public String toString() {
+//		return MethodUtil.convertToJsonMaskValues(this);
+//	}
 
 }

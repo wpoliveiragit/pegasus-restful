@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.projeto.crud.app.resource.ItemResource;
-import br.com.projeto.crud.infra.dto.ItemCreateBodyDto;
-import br.com.projeto.crud.infra.dto.ItemUpdateBodyDto;
+import br.com.projeto.crud.infra.dto.ItemCreateBodyDTO;
+import br.com.projeto.crud.infra.dto.ItemUpdateBodyDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -39,13 +39,13 @@ public class ItemController {
 
 	@PostMapping
 	@Operation(summary = "Add novo item.", description = "Adiciona um novo item na lista.")
-	public ResponseEntity<?> create(@RequestBody ItemCreateBodyDto body) {
+	public ResponseEntity<?> create(@RequestBody ItemCreateBodyDTO body) {
 		return itemResource.create(body);
 	}
 
 	@PutMapping("/{id}")
 	@Operation(summary = "Atualiza item.", description = "Atualiza um item existente pelo ID.")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ItemUpdateBodyDto body) {
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ItemUpdateBodyDTO body) {
 		return itemResource.update(id, body);
 	}
 

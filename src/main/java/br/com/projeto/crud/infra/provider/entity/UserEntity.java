@@ -21,9 +21,9 @@ public class UserEntity {
 	@NotBlank(message = "O passwaord esta em branco!")
 	private String passwaord;
 
-	@Override
-	public String toString() {
-		return MethodUtil.convertToJsonMaskValues(this);
-	}
+//	@Override
+//	public String toString() {
+//		return MethodUtil.convertToJsonMaskValues(this);
+//	}
 
 }

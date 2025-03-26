@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.projeto.crud.app.resource.UserResource;
-import br.com.projeto.crud.infra.dto.UserCreateBodyDto;
-import br.com.projeto.crud.infra.dto.UserUpdateBodyDto;
+import br.com.projeto.crud.infra.dto.UserCreateBodyDTO;
+import br.com.projeto.crud.infra.dto.UserUpdateBodyDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -39,13 +39,13 @@ public class UserController {
 
 	@PostMapping
 	@Operation(summary = "Add novo user.", description = "Adiciona um novo user na tabela.")
-	public ResponseEntity<?> create(@RequestBody UserCreateBodyDto body) {
+	public ResponseEntity<?> create(@RequestBody UserCreateBodyDTO body) {
 		return userResource.create(body);
 	}
 
 	@PutMapping("/{user}")
 	@Operation(summary = "Atualiza user.", description = "Atualiza um user existente pelo login.")
-	public ResponseEntity<?> update(@PathVariable String user, @RequestBody UserUpdateBodyDto body) {
+	public ResponseEntity<?> update(@PathVariable String user, @RequestBody UserUpdateBodyDTO body) {
 		return userResource.update(user, body);
 	}
 

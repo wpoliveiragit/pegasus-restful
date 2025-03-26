@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import br.com.projeto.crud.domain.port.ItemServicePort;
 import br.com.projeto.crud.infra.config.mapper.ItemMapper;
-import br.com.projeto.crud.infra.dto.ItemCreateBodyDto;
-import br.com.projeto.crud.infra.dto.ItemUpdateBodyDto;
+import br.com.projeto.crud.infra.dto.ItemCreateBodyDTO;
+import br.com.projeto.crud.infra.dto.ItemUpdateBodyDTO;
 import br.com.projeto.crud.infra.factory.ResponseFactory;
 import br.com.projeto.crud.infra.model.ItemModel;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +32,11 @@ public class ItemResource {
 		return resp.itemFindAll(itemService.findById(id));
 	}
 
-	public ResponseEntity<?> create(ItemCreateBodyDto body) {
+	public ResponseEntity<?> create(ItemCreateBodyDTO body) {
 		return resp.itemCreate(itemService.create(mapper.toModel(body)));
 	}
 
-	public ResponseEntity<?> update(Long id, ItemUpdateBodyDto body) {
+	public ResponseEntity<?> update(Long id, ItemUpdateBodyDTO body) {
 		body.setId(id);
 		return resp.itemUpdate(itemService.update(mapper.toModel(body)));
 	}

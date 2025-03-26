@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import br.com.projeto.crud.domain.port.UserServicePort;
 import br.com.projeto.crud.infra.config.mapper.UserMapper;
-import br.com.projeto.crud.infra.dto.UserCreateBodyDto;
-import br.com.projeto.crud.infra.dto.UserUpdateBodyDto;
+import br.com.projeto.crud.infra.dto.UserCreateBodyDTO;
+import br.com.projeto.crud.infra.dto.UserUpdateBodyDTO;
 import br.com.projeto.crud.infra.factory.ResponseFactory;
 import br.com.projeto.crud.infra.model.UserModel;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +32,11 @@ public class UserResource {
 		return resp.userFindById(userService.findById(user));
 	}
 
-	public ResponseEntity<?> create(UserCreateBodyDto body) {
+	public ResponseEntity<?> create(UserCreateBodyDTO body) {
 		return resp.userCreate(userService.create(mapper.toModel(body)));
 	}
 
-	public ResponseEntity<?> update(String user, UserUpdateBodyDto body) {
+	public ResponseEntity<?> update(String user, UserUpdateBodyDTO body) {
 		body.setLogin(user);
 		return resp.userUpdate(userService.update(mapper.toModel(body)));
 	}

@@ -28,7 +28,7 @@ public final class MethodUtil {
 
 	}
 
-	public static final String convertToJsonMaskValues(Object obj) {
+	private static final String convertToJsonMaskValues(Object obj) {
 		try {
 			return CONVERT_TO_JSON_MASK_VALUES_MAPPER.writeValueAsString(obj);
 		} catch (Exception ex) {
