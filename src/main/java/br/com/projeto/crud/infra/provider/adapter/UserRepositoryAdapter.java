@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class UserRepositoryAdapter implements UserPersistenceAdapter {
 
 	private final UserRepository userRepository;
-	private UserMapper mapper = UserMapper.getInstance();
+	private final UserMapper mapper;
 
 	@Override
 	public List<UserModel> findAll() {

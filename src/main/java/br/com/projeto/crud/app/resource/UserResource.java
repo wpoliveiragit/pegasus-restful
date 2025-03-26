@@ -12,13 +12,15 @@ import br.com.projeto.crud.infra.dto.UserUpdateBodyDto;
 import br.com.projeto.crud.infra.factory.ResponseFactory;
 import br.com.projeto.crud.infra.model.UserModel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Component
 @RequiredArgsConstructor
+@Log4j2
 public class UserResource {
 
 	private final UserServicePort userService;
-	private UserMapper mapper = UserMapper.getInstance();
+	private final UserMapper mapper;
 	private ResponseFactory resp = new ResponseFactory();
 
 	public ResponseEntity<?> findAll() {

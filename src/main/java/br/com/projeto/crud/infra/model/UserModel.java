@@ -9,7 +9,6 @@ import lombok.Setter;
 public class UserModel {
 
 	private String login;
-
 	private String passwaord;
 
 	@Override

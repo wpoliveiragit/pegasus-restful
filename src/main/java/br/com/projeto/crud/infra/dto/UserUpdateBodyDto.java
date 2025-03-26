@@ -12,7 +12,6 @@ public class UserUpdateBodyDto {
 
 	@JsonIgnore
 	private String login;
-
 	private String passwaord;
 
 	@Override

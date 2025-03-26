@@ -10,11 +10,12 @@ import br.com.projeto.crud.infra.provider.entity.ItemEntity;
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
 
-	ItemModel toModel(ItemCreateBodyDto request);
-
-	ItemModel toModel(ItemUpdateBodyDto request);
-
 	ItemEntity toEntity(ItemModel model);
 
 	ItemModel toModel(ItemEntity entity);
+
+	ItemModel toModel(ItemCreateBodyDto dto);
+
+	ItemModel toModel(ItemUpdateBodyDto dto);
+
 }

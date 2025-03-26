@@ -1,50 +1,21 @@
 package br.com.projeto.crud.infra.config.mapper;
 
+import org.mapstruct.Mapper;
+
 import br.com.projeto.crud.infra.dto.UserCreateBodyDto;
 import br.com.projeto.crud.infra.dto.UserUpdateBodyDto;
 import br.com.projeto.crud.infra.model.UserModel;
 import br.com.projeto.crud.infra.provider.entity.UserEntity;
 
-public final class UserMapper {
+@Mapper(componentModel = "spring")
+public interface UserMapper {
 
-	private static UserMapper INSTANCE;
+	UserEntity toEntity(UserModel model);
 
-	private UserMapper() {
-	}
+	UserModel toModel(UserEntity entity);
 
-	public static UserMapper getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new UserMapper();
-		}
-		return INSTANCE;
-	}
+	UserModel toModel(UserCreateBodyDto dto);
 
-	public UserEntity toEntity(UserModel model) {
-		UserEntity entity = new UserEntity();
-		entity.setLogin(model.getLogin());
-		entity.setPasswaord(model.getPasswaord());
-		return entity;
-	}
-
-	public UserModel toModel(UserEntity entity) {
-		UserModel model = new UserModel();
-		model.setLogin(entity.getLogin());
-		model.setPasswaord(entity.getPasswaord());
-		return model;
-	}
-
-	public UserModel toModel(UserCreateBodyDto body) {
-		UserModel model = new UserModel();
-		model.setLogin(body.getLogin());
-		model.setPasswaord(body.getPasswaord());
-		return model;
-	}
-
-	public UserModel toModel(UserUpdateBodyDto body) {
-		UserModel model = new UserModel();
-		model.setLogin(body.getLogin());
-		model.setPasswaord(body.getPasswaord());
-		return model;
-	}
+	UserModel toModel(UserUpdateBodyDto dto);
 
 }

@@ -11,7 +11,6 @@ import lombok.Setter;
 public class UserCreateBodyDto {
 
 	private String login;
-
 	@JsonIgnore
 	private String passwaord;
 
