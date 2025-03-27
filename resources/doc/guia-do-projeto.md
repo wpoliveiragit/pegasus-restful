@@ -1,6 +1,61 @@
 # GUIA DO PROJETO
+Este guia tem como finalidade:
+-[ ] Explicar a Arquitetura hexagonal (com modificações leves).
+-[ ] Criar um projeto RESTful na Arquitetura Hexagonal e explicar sua funcionalidade.
+-[ ] Explicar configurações mais convencionais no applycation.yml em APIs BackEnd.
+-[ ] Explicar configurações no pom.xml.
 
+## Índice
+- [Arquitetura Hexagonal](./guia-arquitetura-hexagonal)
+- [Funcionalidade](./guia-de-propriedades)
+   - [User (CRUD)](#crud--user)
+   - [Item (CRUD)](#crud--item)
+- [Configurações](#configurações)
+   - [pom.xml](#pomxml)
+   - [application.yml](#applicationyml)
 
+## Estrutura do projeto
+
+```text
+src
+ ├── main
+ │    ├── java
+ │    │    ├── com
+ │    │    │    ├── exemplo
+ │    │    │    │    ├── controller
+ │    │    │    │    │    ├── ItemController.java
+ │    │    │    │    │    └── UserController.java
+ │    │    │    │    ├── model
+ │    │    │    │    │    ├── Item.java
+ │    │    │    │    │    └── User.java
+ │    │    │    │    ├── repository
+ │    │    │    │    │    ├── ItemRepository.java
+ │    │    │    │    │    └── UserRepository.java
+ │    │    │    │    ├── security
+ │    │    │    │    │    └── WebSecurityConfig.java
+ │    │    │    │    └── service
+ │    │    │    │         ├── ItemService.java
+ │    │    │    │         └── UserService.java
+ │    └── resources
+ │         ├── application.yml
+ │         └── data
+ │              └── schema.sql
+ └── pom.xml
+```
+
+## Funcionalidade
+
+descrição
+
+### CRUD :: User
+
+### CRUD :: Item
+
+## Configurações
+
+### pom.xml
+
+### application.yml
 
 ## Banco de dados no projeto
 
@@ -11,18 +66,17 @@ spring.datasource.driver-class-name: 'org.h2.Driver'
 spring.datasource.username: 'sa'
 spring.datasource.password: ''
 ```
-### 
 
-
+###  
 
 * `spring.datasource.url:`
     * `Descrição:` Define a URL de conexão com o DB.
     * `jdbc:h2`: Protocolo de conexão com DB h2 (H2, que é um banco em memória).
     * Exemplo 1: `'jdbc:h2:mem:testdb'`
-      * `:mem`: Indica que o DB será em memória (não persistente).
-      * `:testdb`: Nome do DB.
+        * `:mem`: Indica que o DB será em memória (não persistente).
+        * `:testdb`: Nome do DB.
     * Exemplo 2: `'jdbc:h2:./src/main/resources/testdb'`
-      * `:./src/main/resources/testdb`: Localização do DB em disco.
+        * `:./src/main/resources/testdb`: Localização do DB em disco.
 
 spring.datasource.url: 'jdbc:h2:./src/main/resources/testdb'
 
