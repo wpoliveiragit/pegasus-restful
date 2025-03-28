@@ -1,115 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.3</version>
+        <version>3.4.4</version>
+        <relativePath/>
     </parent>
 
     <groupId>br.com.pegasus.api.restful</groupId>
     <artifactId>pegasus-api-restful</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
+
     <name>pegasus-api-restful</name>
-    <description>CRUD RESTful com itens, segurança, Swagger, repositórios e Kafka.</description>
+    <description>API RESTful gerada com OpenAPI Generator</description>
 
     <properties>
         <java.version>17</java.version>
-        <compilation.build>${maven.build.timestamp}</compilation.build>
     </properties>
 
     <dependencies>
-        <!-- SPRING BOOT -->
+        <!-- Spring Boot web -->
         <dependency>
-            <!-- Cria APIs RESTful e gerencia requisições HTTP -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
-            <!-- Integração com JPA para persistência de dados -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <!-- OpenAPI / Swagger Annotations -->
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.21</version>
         </dependency>
 
         <dependency>
-            <!-- Segurança da aplicação com autenticação e autorização -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <!-- Validações automáticas com anotações como @Valid e @NotNull -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-
-        <!-- [DATABASE] -->
-        <dependency>
-            <!-- Banco de dados em memória para testes locais -->
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <!-- Implementação do Bean Validation usada com @Valid -->
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>8.0.2.Final</version>
-        </dependency>
-
-        <dependency>
-            <!-- API de validação Java padrão usada pelo Hibernate Validator -->
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>2.0.1.Final</version>
-        </dependency>
-
-        <!-- SWAGGER / OPENAPI -->
-        <dependency>
-            <!-- Geração automática da documentação da API REST com UI interativa -->
+            <!-- Springdoc OpenAPI (para gerar a documentação da API) -->
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-
-        <!-- JSON -->
-        <dependency>
-            <!-- Conversão entre objetos Java e JSON -->
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.7.0</version>
         </dependency>
 
         <dependency>
-            <!-- Suporte para tipos Java 8 (como LocalDate) em JSON -->
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
+            <!-- Jakarta Validation (JSR 380+) -->
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
         </dependency>
 
-        <!-- UTILS -->
         <dependency>
-            <!-- Anotações para gerar código automaticamente (como getters/setters) -->
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>compile</scope>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
         </dependency>
 
-        <!-- MAPPER -->
         <dependency>
-            <!-- Mapeia objetos entre camadas, como DTOs e Entities -->
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>1.5.5.Final</version>
-        </dependency>
-
-        <!-- TESTES -->
-        <dependency>
-            <!-- Dependências para testes unitários e de integração com JUnit, Mockito etc. -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -121,43 +69,64 @@
         <plugins>
 
             <plugin>
-                <!-- Spring Boot Plugin -->
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <!-- Compiler Plugin -->
+                <!-- Plugin de compilação -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <!-- Garante a geração dos métodos antes da execução do código -->
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>1.18.30</version>
-                        </path>
-                        <path>
-                            <!-- Garante a geração do mapper no momento da compilação -->
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>1.5.5.Final</version>
-                        </path>
-                    </annotationProcessorPaths>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.12.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <library>spring-boot</library>
+                            <apiPackage>br.com.pegasus.openapi.api</apiPackage>
+                            <modelPackage>br.com.pegasus.openapi.model</modelPackage>
+                            <configOptions>
+                                <interfaceOnly>false</interfaceOnly>
+                                <useJakartaEe>true</useJakartaEe>
+                                <delegatePattern>true</delegatePattern>
+                                <generateApiUtil>true</generateApiUtil>
+                                <skipTests>true</skipTests> <!-- 👈 Essa linha aqui -->
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <!-- Plugin para adicionar fontes geradas ao classpath -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/wpoliveiragit/maven-repository</url>
-        </repository>
-    </distributionManagement>
 
 </project>

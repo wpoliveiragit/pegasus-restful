@@ -44,3 +44,7 @@ app.artifactId: '@project.artifactId@'
 app.version: '@project.version@'
 app.name: '@project.name@'
 app.description: '@project.description@'
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
