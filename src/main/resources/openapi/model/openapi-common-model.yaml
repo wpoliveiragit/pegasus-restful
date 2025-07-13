@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: Shared Models Library
+  version: 1.0.0
+  description: Definições reutilizáveis para múltiplas APIs
+
+paths: { }
+
+components:
+  schemas:
+
+#    TemplateClass:
+#      type: object
+#      x-class:
+#        header:
+#          imports:
+#            - java.util.*
+#          java-doc: ['Descrição da classe.']
+#          annotations-model: ~ # add todas as anotações para um modelo convencional
+#
+#          annotations: [ ]
+#          line:
+#            begine-name: public class
+#            after-name: ~
+#        body:
+#          - attribute:
+#              - 'private String value1;'
+#      properties: # Add a properties por completo para que a classe seja criada
+#        value:
+#          type: object
+
+    LoginFindAllInModel:
+      type: object
+      x-class:
+        header:
+          imports: [ ]
+          java-doc: [ ]
+          annotations-model: true
+          annotations: []
+          line:
+            begine-name: public final class
+            after-name: ~
+        body:
+          - attribute:
+              - 'private LoginPageModel page;'
+      properties:
+        value:
+          type: object
+
+    LoginPageModel:
+      type: object
+      x-class:
+        header:
+          imports: [ ]
+          java-doc: [ ]
+          annotations:
+            - '@Getter'
+            - '@Setter'
+            - '@Builder(toBuilder = true)'
+            - '@NoArgsConstructor'
+            - '@AllArgsConstructor'
+            - '@EqualsAndHashCode'
+          line:
+            begine-name: public final class
+            after-name: ~
+        body:
+          - attribute:
+              - 'private String pageNumber;'
+              - 'private String sizeLines;'
+      properties:
+        value:
+          type: object
+
+
+
+

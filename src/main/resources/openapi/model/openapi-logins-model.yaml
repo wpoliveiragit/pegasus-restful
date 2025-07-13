@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: Shared Models Library
+  version: 1.0.0
+  description: Definições reutilizáveis para múltiplas APIs
+
+paths: { }
+
+components:
+  schemas:
+
+    ExampleClassEntity:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true # true para [model, type, entity, dto]
+          x-header:
+            imports: [ 'jakarta.persistence.Entity' ] #
+            java-doc: [ ] # use aspas simples
+            annotations: ['@Entity'] # use aspas simples
+            line:
+              begine-name: public class
+              after-name: ~
+          x-attributes:
+            - attribute:
+              - '/** Descrição do campo 1 */'
+              - '@Getter'
+              - '@Setter'
+              - 'private String prop_1;'
+            - attribute:
+              - '/** Descrição do campo 2 */'
+              - '@Getter'
+              - '@Setter'
+              - 'private String prop_2;'
+          x-metodes:
+            - metode:
+                - '/** Descrição do método*/'
+                - 'public void voidMetode(){'
+                - '}'
+

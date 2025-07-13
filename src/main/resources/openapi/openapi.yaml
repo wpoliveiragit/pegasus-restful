@@ -1,0 +1,472 @@
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: Login Registration API
+  description: >
+    API REST para cadastro, consulta, atualização 
+    e exclusão de credenciais de login de usuários.
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+
+
+servers:
+  - url: http://localhost:8080/logins/v1
+    description: Servidor local - versão v1.
+
+tags:
+  - name: Logins
+    description: Gerenciamento de credenciais de login.
+
+paths:
+  '/':
+    get:
+      tags: [ Logins ]
+      operationId: loginFindAll
+      summary: List all logins
+      description: Retorna todos os logins cadastrados com paginação.
+      parameters:
+        - $ref: '#/components/parameters/page-query'
+        - $ref: '#/components/parameters/size-query'
+      responses:
+        "200":
+          $ref: '#/components/responses/login-find-all-response'
+        "400":
+          $ref: '#/components/responses/bad-request-response'
+        "500":
+          $ref: '#/components/responses/internal-server-error-response'
+
+    post:
+      tags: [ Logins ]
+      operationId: loginCreate
+      summary: Create new login
+      description: Cadastra um novo usuário com login e senha.
+      requestBody:
+        $ref: '#/components/requestBodies/login-create-request'
+      responses:
+        "201":
+          $ref: '#/components/responses/login-create-response'
+        "400":
+          $ref: '#/components/responses/bad-request-response'
+        "500":
+          $ref: '#/components/responses/internal-server-error-response'
+
+  '/{login}':
+    parameters:
+      - $ref: '#/components/parameters/login-path'
+
+    get:
+      tags: [ Logins ]
+      operationId: loginFindById
+      summary: Get login by name
+      description: Consulta detalhes de um login existente pelo nome.
+      responses:
+        "200":
+          $ref: '#/components/responses/login-find-by-id-response'
+        "400":
+          $ref: '#/components/responses/bad-request-response'
+        "404":
+          $ref: '#/components/responses/not-found-response'
+        "500":
+          $ref: '#/components/responses/internal-server-error-response'
+
+    put:
+      tags: [ Logins ]
+      operationId: loginUpdate
+      summary: Update password
+      description: Atualiza a senha do login especificado.
+      requestBody:
+        $ref: '#/components/requestBodies/login-update-request'
+      responses:
+        "200":
+          $ref: '#/components/responses/login-update-response'
+        "400":
+          $ref: '#/components/responses/bad-request-response'
+        "404":
+          $ref: '#/components/responses/not-found-response'
+        "500":
+          $ref: '#/components/responses/internal-server-error-response'
+
+    delete:
+      tags: [ Logins ]
+      operationId: loginDelete
+      summary: Delete login
+      description: Remove permanentemente o login informado.
+      responses:
+        "200":
+          $ref: '#/components/responses/login-delete-response'
+        "400":
+          $ref: '#/components/responses/bad-request-response'
+        "404":
+          $ref: '#/components/responses/not-found-response'
+        "500":
+          $ref: '#/components/responses/internal-server-error-response'
+
+components:
+
+  parameters: # [Estruturas de query, path, header e cookie]
+    # $ref: '#/components/parameters/name'
+    login-path:
+      description: Login do usuário.
+      required: true
+      in: path
+      name: login
+      schema:
+        $ref: '#/components/schemas/SizeField'
+
+    page-query:
+      description: Índice da página (0-based)
+      required: false
+      in: query
+      name: page
+      schema:
+        $ref: '#/components/schemas/PageField'
+
+    size-query:
+      description: Tamanho da página
+      required: false
+      in: query
+      name: size
+      schema:
+        $ref: '#/components/schemas/SizeField'
+
+  requestBodies: # [Estruturas de requisições]
+    # $ref: '#/components/requestBodies/Name'
+
+    login-create-request:
+      description: Objeto para criação de novo login.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginCreateRequestBody'
+
+    login-update-request:
+      description: Objeto para atualização de senha.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginUpdateRequestBody'
+
+  responses: # [Estruturas de respostas de uma requisições]
+    # $ref: '#/components/responses/Name'
+
+    # [RESPONSE.SUCCESS]
+    login-find-all-response:
+      description: Retorna a paginação de todos os elementos registrados.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginFindAllResponseBody'
+
+    login-find-by-id-response:
+      description: Retorna os elementos encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginFindByIdResponseBody'
+
+    login-create-response:
+      description: Login criado com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginCreateResponseBody'
+
+    login-update-response:
+      description: Login atualizado com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginUpdateResponseBody'
+
+    login-delete-response:
+      description: Login excluído com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginDeleteResponseBody'
+
+    # [RESPONSE.FAIL]
+    bad-request-response:
+      description: Requisição inválida
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExceptionResponseBody'
+
+    not-found-response:
+      description: Recurso não encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExceptionResponseBody'
+
+    conflict-response:
+      description: Recurso não encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExceptionResponseBody'
+
+    internal-server-error-response:
+      description: Erro interno no servidor
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExceptionResponseBody'
+
+
+  schemas: # Modelos de dados :: field, type, body, request e response
+    # $ref: '#/components/schemas/Name'
+
+    # [REQUEST.BODY]
+    LoginCreateRequestBody:
+      type: object
+      properties:
+        login:
+          $ref: '#/components/schemas/login-field'
+        password:
+          $ref: '#/components/schemas/password-field'
+      example:
+        login: usuario123
+        password: senha123
+
+    LoginUpdateRequestBody:
+      type: object
+      properties:
+        password:
+          $ref: '#/components/schemas/password-field'
+      example:
+        password: novaSenha456
+
+    # [RESPONSE.BODY]
+    LoginDeleteResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/StatusResponseType'
+        - type: object
+          properties:
+            data:
+              type: object
+              description: "SUCCESS"
+
+    LoginUpdateResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/StatusResponseType'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/LoginSaveResponseType'
+
+    LoginCreateResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/StatusResponseType'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/LoginSaveResponseType'
+
+    LoginFindByIdResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/StatusResponseType'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/LoginSaveResponseType'
+
+    LoginFindAllResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/StatusResponseType'
+        - $ref: '#/components/schemas/PaginationResponseType'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/LoginSaveResponseType'
+
+    ExceptionResponseBody:
+      type: object
+      description: Modelo padrão para erros
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusResponseType'
+        details:
+          type: string
+          description: Detalhes do erro ocorrido.
+          example: "Senha deve ter no mínimo 8 caracteres"
+
+    # [TYPE]
+    StatusResponseType:
+      type: object
+      description: Wrapper genérico para respostas com status
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusType'
+
+    StatusType:
+      type: object
+      description: Wrapper genérico para respostas com status
+      properties:
+        code:
+          $ref: '#/components/schemas/StatusEnum'
+        message:
+          $ref: '#/components/schemas/MessageEnum'
+
+    LoginSaveResponseType:
+      type: object
+      description: Dados do login retornados pela API.
+      properties:
+        login:
+          $ref: '#/components/schemas/login-field'
+        createdAt:
+          $ref: '#/components/schemas/date-create-field'
+        updatedAt:
+          $ref: '#/components/schemas/date-update-field'
+
+    PaginationResponseType:
+      type: object
+      description: Modelo padrão para erros
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationType'
+
+
+    PaginationType:
+      type: object
+      description: Detalhes do erro ocorrido.
+      properties:
+        TotalItensList:
+          $ref: '#/components/schemas/total-itens-list-field'
+        CurrentPage:
+          $ref: '#/components/schemas/current-page-field'
+        ItemsPerPage:
+          $ref: '#/components/schemas/items-per-page-field'
+        TotalPages:
+          $ref: '#/components/schemas/total-pages-field'
+        HasNextPage:
+          $ref: '#/components/schemas/has-next-page-field'
+
+
+    # [FIELDS]
+
+    # FIELD - BOOLEAN
+    has-next-page-field:
+      type: boolean
+      description: Se existe próxima página.
+      example: true
+
+    # [FIELD] - INTEGER
+    total-itens-list-field:
+      type: integer
+      description: Total de itens da lista.
+      example: 123
+
+    current-page-field:
+      type: integer
+      description: Página atual (0-based).
+      example: 0
+
+    items-per-page-field:
+      type: integer
+      description: Itens por página.
+      example: 20
+
+    total-pages-field:
+      type: integer
+      description: Total de páginas disponíveis.
+      example: 7
+
+    SizeField:
+      type: integer
+      minimum: 1
+      default: 20
+
+    PageField:
+      type: integer
+      minimum: 0
+      default: 0
+
+    # FIELD - STRING
+    login-field:
+      type: string
+      description: Nome de usuário (login).
+      minLength: 1
+      maxLength: 150
+      example: usuario123
+
+    password-field:
+      type: string
+      description: Senha do usuário.
+      minLength: 1
+      maxLength: 150
+      example: senha123
+
+    # FIELD - DATE
+    date-create-field:
+      type: string
+      format: date
+      description: Data de criação do login
+      example: "2025-06-27T15:00:00Z"
+
+    date-update-field:
+      type: string
+      format: date
+      description: Data de atualização do login
+      example: "2025-06-27T15:05:00Z"
+
+    # [ENUM]
+    StatusEnum:
+      type: integer
+      description: Código do erro
+      enum:
+        - 200
+        - 400
+        - 404
+        - 409
+        - 500
+      x-enum-varnames:
+        - OK
+        - BAD_REQUEST
+        - NOT_FOUND
+        - CONFLICT
+        - INTERNAL_SERVER_ERROR
+      example: 200
+
+    MessageEnum:
+      type: string
+      description: Código do erro
+      enum:
+        - "SUCCESS"
+        - "CREATED"
+        - "Bad request"
+        - "Not found"
+        - "Conflict"
+        - "Internal server error"
+      x-enum-varnames:
+        - OK
+        - CREATE
+        - BAD_REQUEST
+        - NOT_FOUND
+        - CONFLICT
+        - INTERNAL_SERVER_ERROR
+      example: SUCCESS
+
+
+
+
+
+####
+####
+####
+####
+####

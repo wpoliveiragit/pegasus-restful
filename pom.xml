@@ -1,148 +1,259 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.3</version>
-	</parent>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.com.projeto.cruds</groupId>
-	<artifactId>pegasus-restful</artifactId>
-	<version>1.0.0</version>
-	<name>pegasus-restful</name>
-	<description>Projeto backend RESTdasful</description>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.3</version>
+    </parent>
 
-	<properties>
-		<java.version>17</java.version>
-		<compilation.build>${maven.build.timestamp}</compilation.build>
-	</properties>
+    <name>pegasus-api-rest-cover</name>
+    <description>Aplicação CRUD {Pacodes em camadas, H2}.</description>
 
-	<dependencies>
+    <groupId>br.com.pegasus</groupId>
+    <artifactId>pegasus-api-rest-cover</artifactId>
+    <version>1.0.0</version>
 
-		<!-- SPRING BOOT WEB -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+    <properties>
+        <!-- CONFIGURATION -->
+        <java.version>17</java.version>
+        <compilation.build>${maven.build.timestamp}</compilation.build>
 
-		<!-- Database -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>8.0.2.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
-		</dependency>
-		<dependency> <!-- CONTROLE DE PERSISTÊNCIA DE BANCO DE DADOS -->
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+        <!-- PATHs -->
+        <path.resources>${project.basedir}/src/main/resources</path.resources>
 
-		<dependency> <!-- SWAGGER/OPENAPI -->
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.1.0</version>
-		</dependency>
+        <!-- CONFIGURATION :: OPENAPI-->
+        <path.resources.openapi>${path.resources}/openapi</path.resources.openapi>
+        <openapi.root-package>br.com.pegasus.swagger</openapi.root-package>
 
-		<dependency> <!-- VALIDAÇÕES : @NotNull e @Valid -->
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
+        <openapi.main.inputSpec>${path.resources.openapi}/openapi.yaml</openapi.main.inputSpec>
+        <openapi.main.templateDirectory>${path.resources.openapi}</openapi.main.templateDirectory>
+        <openapi.main.apiPackage>${openapi.root-package}.web.login</openapi.main.apiPackage>
+        <openapi.main.modelPackage>${openapi.root-package}.type.login</openapi.main.modelPackage>
 
-		<!-- Utils -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>compile</scope>
-		</dependency>
+        <openapi.model.login.inputSpec>${path.resources.openapi}/model/openapi-logins-model.yaml</openapi.model.login.inputSpec>
+        <openapi.model.login.templateDirectory>${path.resources.openapi}/model</openapi.model.login.templateDirectory>
+        <openapi.model.login.apiPackage>${openapi.root-package}.web.login</openapi.model.login.apiPackage>
+        <openapi.model.login.modelPackage>${openapi.root-package}.model.login</openapi.model.login.modelPackage>
 
-		<dependency> <!-- CRIA OBJETOS PARA JSON STRING -->
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
-		</dependency>
+    </properties>
 
-		<dependency> <!-- SECURITY -->
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+    <dependencies>
+        <!-- Cria APIs RESTful e gerencia requisições HTTP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-		<dependency> <!-- CREATE ANNOTATION-->
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
+        <!-- Integração com Bean Validation (JSR 380) para validações com @Valid, @NotNull, etc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
-		<!-- MAPPER -->
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>1.5.5.Final</version>
-		</dependency>
+        <!-- Validadores -->
+        <dependency><!-- API da especificação Bean Validation (JSR 380): define anotações como @NotNull, @Size, etc -->
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+        <dependency><!-- Implementação da API Bean Validation: executa validações em tempo de execução (@NotNull, @Size, @Email, etc)  -->
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.2.Final</version>
+        </dependency>
+        <dependency><!-- Anotações da JetBrains para análise estática (ex: @NotNull, @Nullable) em IDEs -->
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>26.0.2</version>
+            <scope>compile</scope>
+        </dependency>
 
-		<!-- TESTES -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <!-- Fornece anotações padrão Jakarta como @PostConstruct, @PreDestroy; usado em REST, JPA e beans -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
+        </dependency>
 
-	</dependencies>
+        <!-- Geração automática de métodos como getters, setters, toString, builder, etc. -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+        </dependency>
 
-	<build>
-		<plugins>
+        <!-- Banco de dados em memória leve para testes e desenvolvimento local -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- Integração com JPA para manipulação de dados e persistência em banco de dados -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+        <!-- SWAGGER: Gera interface web interativa para testar e visualizar a API em /swagger-ui.html -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency><!-- SWAGGER: Gera código (client/server) com base no contrato OpenAPI -->
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator</artifactId>
+            <version>7.14.0</version>
+        </dependency>
 
-			<!-- plugin do compiler -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>17</source>
-					<target>17</target>
-					<annotationProcessorPaths>
-						<!-- Lombok -->
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<version>1.18.30</version>
-						</path>
-						<!-- MapStruct -->
-						<path>
-							<groupId>org.mapstruct</groupId>
-							<artifactId>mapstruct-processor</artifactId>
-							<version>1.5.5.Final</version>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
+        <dependency><!-- Conversão entre objetos Java e JSON -->
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
 
-		</plugins>
-	</build>
+        <!-- Suporte para tipos modernos do Java (ex: LocalDate) na conversão JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
 
-	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<url>https://maven.pkg.github.com/wpoliveiragit/maven-repository</url>
-		</repository>
-	</distributionManagement>
+        <!-- Mapeamento entre objetos (ex: de DTO para Entity e vice-versa) -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.5.Final</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin><!-- Empacotador maven (jar/war) -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin><!-- Compiler maven -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <annotationProcessorPaths>
+                        <path>  <!-- Garante a geração dos métodos antes da execução do código -->
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.30</version>
+                        </path>
+                        <path> <!-- Garante a geração do mapper no momento da compilação -->
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>1.5.5.Final</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <plugin> <!-- SWAGGER GENERATEGENERATE - SWAGGER-->
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <executions>
+                    <execution> <!-- Contrato REST (login) -->
+                        <id>generate-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${openapi.main.inputSpec}</inputSpec>
+                            <templateDirectory>${openapi.main.templateDirectory}</templateDirectory>
+                            <apiPackage>${openapi.main.apiPackage}</apiPackage>
+                            <modelPackage>${openapi.main.modelPackage}</modelPackage>
+
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <generatorName>spring</generatorName>
+
+                            <typeMappings>
+                                <date-time>java.time.LocalDate</date-time>
+                                <custom-date>java.time.LocalDate</custom-date>
+                            </typeMappings>
+                            <importMappings>
+                                <LocalDate>lombok.*</LocalDate>
+                            </importMappings>
+                            <additionalProperties>
+                                <dateLibrary>java8</dateLibrary> <!-- Garante que use java.time.* -->
+                            </additionalProperties>
+                            <configOptions>
+                                <async>true</async>
+                                <booleanGetterPrefix>is</booleanGetterPrefix>
+                                <dateLibrary>java8</dateLibrary>
+                                <delegatePattern>true</delegatePattern>
+                                <disableGeneratedAnnotation>true</disableGeneratedAnnotation>
+                                <generateBuilders>true</generateBuilders>
+                                <generateTests>false</generateTests>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <openApiNullable>false</openApiNullable>
+                                <returnResponse>true</returnResponse>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useBeanValidation>false</useBeanValidation>
+                                <useTags>true</useTags>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <generateTests>false</generateTests>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+
+                    <execution> <!-- Contrato model (login) -->
+                        <id>generate-shared-models</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${openapi.model.login.inputSpec}</inputSpec>
+                            <templateDirectory>${openapi.model.login.templateDirectory}</templateDirectory>
+                            <apiPackage>${openapi.model.login.apiPackage}</apiPackage>
+                            <modelPackage>${openapi.model.login.modelPackage}</modelPackage>
+
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <generatorName>spring</generatorName>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+
+                            <configOptions>
+                                <async>true</async>
+                                <booleanGetterPrefix>is</booleanGetterPrefix>
+                                <dateLibrary>java8</dateLibrary>
+                                <disableGeneratedAnnotation>true</disableGeneratedAnnotation>
+                                <delegatePattern>true</delegatePattern>
+                                <generateBuilders>true</generateBuilders>
+                                <generateTests>false</generateTests>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <openApiNullable>false</openApiNullable>
+                                <returnResponse>true</returnResponse>
+                                <useBeanValidation>false</useBeanValidation>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <useTags>true</useTags>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/wpoliveiragit/maven-repository</url>
+        </repository>
+    </distributionManagement>
 
 </project>
