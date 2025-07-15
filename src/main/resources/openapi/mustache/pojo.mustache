@@ -23,16 +23,19 @@ package {{package}};
 {{/vendorExtensions.x-header}}
 
 {{! IMPORT }}
-//FIXED
+// IMPORT - FIXED
 import jakarta.annotation.Generated;
+import java.util.List;
+import java.util.ArrayList;
 {{#vendorExtensions.x-header}}
 {{#imports}}
-// 'class.x-header.imports: [ ... ]'
+
+// IMPORT - 'class.x-header.imports: [ ... ]'
 import {{{.}}};
 {{/imports}}
 {{/vendorExtensions.x-header}}
 {{#vendorExtensions.x-data-object}}
-// 'class.x-data-object: true'
+// IMPORT - 'class.x-data-object: true'
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,17 +48,17 @@ import lombok.RequiredArgsConstructor;
 
 {{! ANNOTATION }}
 {{#vendorExtensions.x-data-object}}
-// 'class.x-data-object: true'
+// ANNOTATION - 'class.x-data-object: true'
 @Getter @Setter @Builder(toBuilder = true)
 @AllArgsConstructor @RequiredArgsConstructor
 @EqualsAndHashCode
 {{/vendorExtensions.x-data-object}}
 {{#vendorExtensions.x-header}}
 {{#annotations}}
-// 'class.x-header.annotations'
+//ANNOTATION - 'class.x-header.annotations'
 {{{.}}}
 {{/annotations}}
-// FIXED
+// ANNOTATION - FIXED
 {{/vendorExtensions.x-header}}
 @SuppressWarnings({"hiding", "static-method", "unused"})
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.14.0")
@@ -73,10 +76,10 @@ import lombok.RequiredArgsConstructor;
 
 {{/vendorExtensions.x-attributes}}
 {{! METHODS}}
-{{#vendorExtensions.x-metodes}}
-{{#metode}}
+{{#vendorExtensions.x-methods}}
+{{#method}}
     {{{.}}}
-{{/metode}}
-{{/vendorExtensions.x-metodes}}
+{{/method}}
+{{/vendorExtensions.x-methods}}
 {{/vars}}
 }

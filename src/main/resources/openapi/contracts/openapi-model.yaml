@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  title: Shared Models Library
+  version: 1.0.0
+  description: Definições reutilizáveis para múltiplas APIs
+
+paths: { }
+
+components:
+  schemas:
+
+    RequestModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: [ 'private PageModel page;' ]
+            - attribute: [ 'private PersonagemModel personagem;' ]
+          x-methods:
+            - method: [ ]
+
+    ResponseModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: [ 'private PaginationModel page;' ]
+            - attribute: [ 'private List<PersonagemModel> personagens = new ArrayList<>();' ]
+          x-methods:
+            - method: [ ]
+
+    PaginationModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: ['private int quantity;']
+            - attribute: ['private int currentPage;']
+            - attribute: ['private int itemsPerPage;']
+            - attribute: ['private int totalPages;']
+            - attribute: ['private boolean hasNextPage;']
+          x-methods:
+            - method: [ ]
+
+    PageModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute:
+                - '/** Índice da pagina (inicia por 0)*/'
+                - 'private int index;'
+            - attribute:
+                - '/** Quantidade de linhas da pagina */'
+                - 'private int lines;'
+          x-methods:
+            - method: [ ]
+
+    PersonagemModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: [ 'private int personagemId;' ]
+            - attribute: [ 'private int racaId;' ]
+            - attribute: [ 'private int classeId;' ]
+            - attribute: [ 'private String nome;' ]
+            - attribute: [ 'private AtributosModel atributos;' ]
+          x-methods:
+            - method: [ ]
+
+    AtributosModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: [ 'private int vida;' ]
+            - attribute: [ 'private DanoModel dano;' ]
+            - attribute: [ 'private ResistenciaModel resistencia;' ]
+            - attribute: [ 'private List<String> habilidadeList = new ArrayList<>();' ]
+          x-methods:
+            - method: [ ]
+
+    DanoModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: [ 'private int fisico;' ]
+            - attribute: [ 'private int magico;' ]
+          x-methods:
+            - method: [ ]
+
+    ResistenciaModel:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: ['private int fisico;']
+            - attribute: ['private int magico;']
+          x-methods:
+            - method: [ ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

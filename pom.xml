@@ -19,26 +19,35 @@
     <version>1.0.0</version>
 
     <properties>
-        <!-- CONFIGURATION -->
-        <java.version>17</java.version>
-        <compilation.build>${maven.build.timestamp}</compilation.build>
-
         <!-- PATHs -->
         <path.resources>${project.basedir}/src/main/resources</path.resources>
 
-        <!-- CONFIGURATION :: OPENAPI-->
+        <!-- GERAL -->
+        <java.version>17</java.version>
+        <compilation.build>${maven.build.timestamp}</compilation.build>
+
+        <!-- OPEN-API -->
         <path.resources.openapi>${path.resources}/openapi</path.resources.openapi>
         <openapi.root-package>br.com.pegasus.swagger</openapi.root-package>
+        <openapi.apiPackage>${openapi.root-package}.web.personagens</openapi.apiPackage>
+        <openapi.templateDirectory>${path.resources.openapi}/mustache</openapi.templateDirectory>
 
+        <!-- CONTRATO :: MAIN -->
+        <openapi.main.id>contract-main</openapi.main.id>
         <openapi.main.inputSpec>${path.resources.openapi}/openapi.yaml</openapi.main.inputSpec>
-        <openapi.main.templateDirectory>${path.resources.openapi}</openapi.main.templateDirectory>
-        <openapi.main.apiPackage>${openapi.root-package}.web.login</openapi.main.apiPackage>
-        <openapi.main.modelPackage>${openapi.root-package}.type.login</openapi.main.modelPackage>
-
-        <openapi.model.login.inputSpec>${path.resources.openapi}/model/openapi-logins-model.yaml</openapi.model.login.inputSpec>
-        <openapi.model.login.templateDirectory>${path.resources.openapi}/model</openapi.model.login.templateDirectory>
-        <openapi.model.login.apiPackage>${openapi.root-package}.web.login</openapi.model.login.apiPackage>
-        <openapi.model.login.modelPackage>${openapi.root-package}.model.login</openapi.model.login.modelPackage>
+        <openapi.main.modelPackage>${openapi.root-package}.personagens.type</openapi.main.modelPackage>
+        <!-- CONTRATO :: MODEL -->
+        <openapi.model.id>contract-model</openapi.model.id>
+        <openapi.model.inputSpec>${path.resources.openapi}/contracts/openapi-model.yaml</openapi.model.inputSpec>
+        <openapi.model.modelPackage>${openapi.root-package}.personagens.model</openapi.model.modelPackage>
+        <!-- CONTRATO :: ENTITY -->
+        <openapi.entity.id>contract-entity</openapi.entity.id>
+        <openapi.entity.inputSpec>${path.resources.openapi}/contracts/openapi-entity.yaml</openapi.entity.inputSpec>
+        <openapi.entity.modelPackage>${openapi.root-package}.personagens.entity</openapi.entity.modelPackage>
+        <!-- CONTRATO :: UTIL -->
+        <openapi.util.id>contract-util</openapi.util.id>
+        <openapi.util.inputSpec>${path.resources.openapi}/contracts/openapi-util.yaml</openapi.util.inputSpec>
+        <openapi.util.modelPackage>${openapi.root-package}.util</openapi.util.modelPackage>
 
     </properties>
 
@@ -160,20 +169,21 @@
                 </configuration>
             </plugin>
 
-            <plugin> <!-- SWAGGER GENERATEGENERATE - SWAGGER-->
+            <!-- SWAGGER GENERATEGENERATE -->
+            <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
+
+                <!-- CONTRATO :: MAIN -->
                 <executions>
-                    <execution> <!-- Contrato REST (login) -->
-                        <id>generate-api</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
+                    <execution>
+                        <id>${openapi.main.id}</id>
+                        <goals><goal>generate</goal></goals>
                         <configuration>
                             <inputSpec>${openapi.main.inputSpec}</inputSpec>
-                            <templateDirectory>${openapi.main.templateDirectory}</templateDirectory>
-                            <apiPackage>${openapi.main.apiPackage}</apiPackage>
                             <modelPackage>${openapi.main.modelPackage}</modelPackage>
+                            <templateDirectory>${path.resources.openapi}</templateDirectory> <!-- USA DEFAULT -->
+                            <apiPackage>${openapi.apiPackage}</apiPackage>
 
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                             <skipValidateSpec>true</skipValidateSpec>
@@ -209,21 +219,83 @@
                         </configuration>
                     </execution>
 
-                    <execution> <!-- Contrato model (login) -->
-                        <id>generate-shared-models</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
+                    <!-- CONTRATO :: MODEL -->
+                    <execution>
+                        <id>${openapi.model.id}</id>
+                        <goals><goal>generate</goal></goals>
                         <configuration>
-                            <inputSpec>${openapi.model.login.inputSpec}</inputSpec>
-                            <templateDirectory>${openapi.model.login.templateDirectory}</templateDirectory>
-                            <apiPackage>${openapi.model.login.apiPackage}</apiPackage>
-                            <modelPackage>${openapi.model.login.modelPackage}</modelPackage>
+                            <inputSpec>${openapi.model.inputSpec}</inputSpec>
+                            <modelPackage>${openapi.model.modelPackage}</modelPackage>
+                            <templateDirectory>${openapi.templateDirectory}</templateDirectory>
+                            <apiPackage>${openapi.apiPackage}</apiPackage>
 
                             <skipValidateSpec>true</skipValidateSpec>
                             <generatorName>spring</generatorName>
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <configOptions>
+                                <async>true</async>
+                                <booleanGetterPrefix>is</booleanGetterPrefix>
+                                <dateLibrary>java8</dateLibrary>
+                                <disableGeneratedAnnotation>true</disableGeneratedAnnotation>
+                                <delegatePattern>true</delegatePattern>
+                                <generateBuilders>true</generateBuilders>
+                                <generateTests>false</generateTests>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <openApiNullable>false</openApiNullable>
+                                <returnResponse>true</returnResponse>
+                                <useBeanValidation>false</useBeanValidation>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <useTags>true</useTags>
+                            </configOptions>
+                        </configuration>
+                    </execution>
 
+                    <!-- CONTRATO :: ENTITY -->
+                    <execution>
+                        <id>${openapi.entity.id}</id>
+                        <goals><goal>generate</goal></goals>
+                        <configuration>
+                            <inputSpec>${openapi.entity.inputSpec}</inputSpec>
+                            <modelPackage>${openapi.entity.modelPackage}</modelPackage>
+                            <templateDirectory>${openapi.templateDirectory}</templateDirectory>
+                            <apiPackage>${openapi.apiPackage}</apiPackage>
+
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <generatorName>spring</generatorName>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <configOptions>
+                                <async>true</async>
+                                <booleanGetterPrefix>is</booleanGetterPrefix>
+                                <dateLibrary>java8</dateLibrary>
+                                <disableGeneratedAnnotation>true</disableGeneratedAnnotation>
+                                <delegatePattern>true</delegatePattern>
+                                <generateBuilders>true</generateBuilders>
+                                <generateTests>false</generateTests>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <openApiNullable>false</openApiNullable>
+                                <returnResponse>true</returnResponse>
+                                <useBeanValidation>false</useBeanValidation>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <useTags>true</useTags>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+
+                    <!-- CONTRATO :: UTIL -->
+                    <execution>
+                        <id>${openapi.util.id}</id>
+                        <goals><goal>generate</goal></goals>
+                        <configuration>
+                            <inputSpec>${openapi.util.inputSpec}</inputSpec>
+                            <modelPackage>${openapi.util.modelPackage}</modelPackage>
+                            <templateDirectory>${openapi.templateDirectory}</templateDirectory>
+                            <apiPackage>${openapi.apiPackage}</apiPackage>
+
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <generatorName>spring</generatorName>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                             <configOptions>
                                 <async>true</async>
                                 <booleanGetterPrefix>is</booleanGetterPrefix>

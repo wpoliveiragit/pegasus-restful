@@ -2,75 +2,75 @@ openapi: 3.0.0
 
 info:
   version: 1.0.0
-  title: Login Registration API
+  title: Registro de Personagens
   description: >
     API REST para cadastro, consulta, atualização 
-    e exclusão de credenciais de login de usuários.
+    e exclusão de dados de Personagem.
   termsOfService: https://swagger.io/terms/
   contact:
-    email: apiteam@swagger.io
+    email: cadastro@minhaliga.com.br
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 
 externalDocs:
-  description: Find out more about Swagger
-  url: https://swagger.io
+  description: Saiba mais sobre MINHA LIGA em
+  url: https://www.minhaliga.com.br
 
 
 servers:
-  - url: http://localhost:8080/logins/v1
+  - url: http://localhost:8080/minhaliga/v1
     description: Servidor local - versão v1.
 
 tags:
-  - name: Logins
-    description: Gerenciamento de credenciais de login.
+  - name: personagens
+    description: Gerenciamento de personagens.
 
 paths:
   '/':
     get:
-      tags: [ Logins ]
-      operationId: loginFindAll
-      summary: List all logins
-      description: Retorna todos os logins cadastrados com paginação.
+      tags: [ personagens ]
+      operationId: personagensGetPage
+      summary: Pagina de personagems
+      description: Retorna a pagina da lista de personagens cadastrado.
       parameters:
         - $ref: '#/components/parameters/page-query'
         - $ref: '#/components/parameters/size-query'
       responses:
         "200":
-          $ref: '#/components/responses/login-find-all-response'
+          $ref: '#/components/responses/get-page-response'
         "400":
           $ref: '#/components/responses/bad-request-response'
         "500":
           $ref: '#/components/responses/internal-server-error-response'
 
     post:
-      tags: [ Logins ]
-      operationId: loginCreate
-      summary: Create new login
-      description: Cadastra um novo usuário com login e senha.
+      tags: [ personagens ]
+      operationId: personagensCreate
+      summary: Cria um novo personagem
+      description: Cria um novo personagem.
       requestBody:
-        $ref: '#/components/requestBodies/login-create-request'
+        $ref: '#/components/requestBodies/create-request'
       responses:
         "201":
-          $ref: '#/components/responses/login-create-response'
+          $ref: '#/components/responses/create-response'
         "400":
           $ref: '#/components/responses/bad-request-response'
         "500":
           $ref: '#/components/responses/internal-server-error-response'
 
-  '/{login}':
+  '/{id}':
     parameters:
-      - $ref: '#/components/parameters/login-path'
+      - $ref: '#/components/parameters/id-path'
 
     get:
-      tags: [ Logins ]
-      operationId: loginFindById
-      summary: Get login by name
-      description: Consulta detalhes de um login existente pelo nome.
+      tags: [ personagens ]
+      operationId: personagensGet
+      summary: Obtem um personahem pelo id
+      description: Consulta detalhes de um personagem existente pelo id.
       responses:
         "200":
-          $ref: '#/components/responses/login-find-by-id-response'
+          $ref: '#/components/responses/get-response'
         "400":
           $ref: '#/components/responses/bad-request-response'
         "404":
@@ -79,15 +79,15 @@ paths:
           $ref: '#/components/responses/internal-server-error-response'
 
     put:
-      tags: [ Logins ]
-      operationId: loginUpdate
-      summary: Update password
-      description: Atualiza a senha do login especificado.
+      tags: [ personagens ]
+      operationId: personagensUpdate
+      summary: Atualiza personagem
+      description: Atualiza os dados de um personagem.
       requestBody:
-        $ref: '#/components/requestBodies/login-update-request'
+        $ref: '#/components/requestBodies/update-request'
       responses:
         "200":
-          $ref: '#/components/responses/login-update-response'
+          $ref: '#/components/responses/update-response'
         "400":
           $ref: '#/components/responses/bad-request-response'
         "404":
@@ -96,13 +96,13 @@ paths:
           $ref: '#/components/responses/internal-server-error-response'
 
     delete:
-      tags: [ Logins ]
+      tags: [ personagens ]
       operationId: loginDelete
       summary: Delete login
       description: Remove permanentemente o login informado.
       responses:
         "200":
-          $ref: '#/components/responses/login-delete-response'
+          $ref: '#/components/responses/delete-response'
         "400":
           $ref: '#/components/responses/bad-request-response'
         "404":
@@ -113,14 +113,13 @@ paths:
 components:
 
   parameters: # [Estruturas de query, path, header e cookie]
-    # $ref: '#/components/parameters/name'
-    login-path:
-      description: Login do usuário.
+    id-path:
+      description: Id do personagem.
       required: true
       in: path
-      name: login
+      name: id
       schema:
-        $ref: '#/components/schemas/SizeField'
+        $ref: '#/components/schemas/id-field'
 
     page-query:
       description: Índice da página (0-based)
@@ -128,7 +127,7 @@ components:
       in: query
       name: page
       schema:
-        $ref: '#/components/schemas/PageField'
+        $ref: '#/components/schemas/page-field'
 
     size-query:
       description: Tamanho da página
@@ -136,65 +135,63 @@ components:
       in: query
       name: size
       schema:
-        $ref: '#/components/schemas/SizeField'
+        $ref: '#/components/schemas/size-field'
 
   requestBodies: # [Estruturas de requisições]
-    # $ref: '#/components/requestBodies/Name'
 
-    login-create-request:
-      description: Objeto para criação de novo login.
+    create-request:
+      description: Requisição de criação.
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginCreateRequestBody'
+            $ref: '#/components/schemas/PersonagemCreateBodyRequestType'
 
-    login-update-request:
-      description: Objeto para atualização de senha.
+    update-request:
+      description: request de atualização.
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginUpdateRequestBody'
+            $ref: '#/components/schemas/PersonagemUpdateBodyRequestType'
 
   responses: # [Estruturas de respostas de uma requisições]
-    # $ref: '#/components/responses/Name'
 
     # [RESPONSE.SUCCESS]
-    login-find-all-response:
-      description: Retorna a paginação de todos os elementos registrados.
+    get-page-response:
+      description: Retorna a pagina solicitada.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginFindAllResponseBody'
+            $ref: '#/components/schemas/PersonagemPageResponseType'
 
-    login-find-by-id-response:
-      description: Retorna os elementos encontrado.
+    get-response:
+      description: Retorna o elemento solicitao.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginFindByIdResponseBody'
+            $ref: '#/components/schemas/PersonagemGetResponseType'
 
-    login-create-response:
-      description: Login criado com sucesso.
+    create-response:
+      description: Retorna o elemento criado.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginCreateResponseBody'
+            $ref: '#/components/schemas/PersonagemCreateBodyResponseType'
 
-    login-update-response:
-      description: Login atualizado com sucesso.
+    update-response:
+      description: Retorna o elemento atualizado.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginUpdateResponseBody'
+            $ref: '#/components/schemas/PersonagemUpdateBodyResponseType'
 
-    login-delete-response:
-      description: Login excluído com sucesso.
+    delete-response:
+      description: Retorna o elemento deletado.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginDeleteResponseBody'
+            $ref: '#/components/schemas/PersonagemDeleteBodyResponseType'
 
     # [RESPONSE.FAIL]
     bad-request-response:
@@ -202,118 +199,198 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ExceptionResponseBody'
+            $ref: '#/components/schemas/PersonagemExceptionResponseType'
 
     not-found-response:
       description: Recurso não encontrado
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ExceptionResponseBody'
+            $ref: '#/components/schemas/PersonagemExceptionResponseType'
 
     conflict-response:
       description: Recurso não encontrado
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ExceptionResponseBody'
+            $ref: '#/components/schemas/PersonagemExceptionResponseType'
 
     internal-server-error-response:
       description: Erro interno no servidor
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ExceptionResponseBody'
+            $ref: '#/components/schemas/PersonagemExceptionResponseType'
 
 
   schemas: # Modelos de dados :: field, type, body, request e response
-    # $ref: '#/components/schemas/Name'
+
+    # [FIELD]
+    size-field:
+      type: integer
+      minimum: 0
+      default: 0
+    id-field:
+      type: integer
+      minimum: 1
+      default: 20
+
+    page-field:
+      type: integer
+      minimum: 0
+      default: 0
+
+    nome-field:
+      type: string
+      description: Nome do personagem.
+      minLength: 5
+      maxLength: 150
+      example: Personagem
+
+    list-string-field:
+      type: array
+      items:
+        type: string
+
+    # [Type]
+    DanoType:
+      type: object
+      description: ''
+      properties:
+        fisico:
+          type: integer
+        magico:
+          type: integer
+
+    ResistenciaType:
+      type: object
+      description: ''
+      properties:
+        fisico:
+          type: integer
+        magico:
+          type: integer
+
+    AtributosType:
+      type: object
+      description: ''
+      properties:
+        vida:
+          type: integer
+        dano:
+          $ref: '#/components/schemas/DanoType'
+        resistencia:
+          $ref: '#/components/schemas/ResistenciaType'
+        habilidadeList:
+          $ref: '#/components/schemas/list-string-field'
+
+    PersonagemType:
+      type: object
+      properties:
+        personagemId:
+          $ref: '#/components/schemas/id-field'
+        racaId:
+          $ref: '#/components/schemas/id-field'
+        classeId:
+          $ref: '#/components/schemas/id-field'
+        nome:
+          $ref: '#/components/schemas/nome-field'
+        atributos:
+          $ref: '#/components/schemas/AtributosType'
+
+    UpdatePersonagemType:
+      type: object
+      properties:
+        racaId:
+          $ref: '#/components/schemas/id-field'
+        classeId:
+          $ref: '#/components/schemas/id-field'
+        nome:
+          $ref: '#/components/schemas/nome-field'
+
+    CreatePersonagemType:
+      type: object
+      properties:
+        nome:
+          $ref: '#/components/schemas/nome-field'
+        classe:
+          type: integer
+        raca:
+          type: integer
 
     # [REQUEST.BODY]
-    LoginCreateRequestBody:
+    PersonagemCreateBodyRequestType:
       type: object
       properties:
-        login:
-          $ref: '#/components/schemas/login-field'
-        password:
-          $ref: '#/components/schemas/password-field'
-      example:
-        login: usuario123
-        password: senha123
+        create:
+          $ref: '#/components/schemas/CreatePersonagemType'
 
-    LoginUpdateRequestBody:
+    PersonagemUpdateBodyRequestType:
       type: object
       properties:
-        password:
-          $ref: '#/components/schemas/password-field'
-      example:
-        password: novaSenha456
+        racaId:
+          $ref: '#/components/schemas/id-field'
+        classeId:
+          $ref: '#/components/schemas/id-field'
+        nome:
+          $ref: '#/components/schemas/nome-field'
 
     # [RESPONSE.BODY]
-    LoginDeleteResponseBody:
-      allOf:
-        - $ref: '#/components/schemas/StatusResponseType'
-        - type: object
-          properties:
-            data:
-              type: object
-              description: "SUCCESS"
+    PersonagemDeleteBodyResponseType:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusResponseType'
 
-    LoginUpdateResponseBody:
-      allOf:
-        - $ref: '#/components/schemas/StatusResponseType'
-        - type: object
-          properties:
-            data:
-              $ref: '#/components/schemas/LoginSaveResponseType'
+    PersonagemUpdateBodyResponseType:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusResponseType'
 
-    LoginCreateResponseBody:
-      allOf:
-        - $ref: '#/components/schemas/StatusResponseType'
-        - type: object
-          properties:
-            data:
-              $ref: '#/components/schemas/LoginSaveResponseType'
+    PersonagemCreateBodyResponseType:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusResponseType'
+        data:
+          $ref: '#/components/schemas/PersonagemType'
 
-    LoginFindByIdResponseBody:
-      allOf:
-        - $ref: '#/components/schemas/StatusResponseType'
-        - type: object
-          properties:
-            data:
-              $ref: '#/components/schemas/LoginSaveResponseType'
+    PersonagemGetResponseType:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusResponseType'
+        data:
+          $ref: '#/components/schemas/PersonagemType'
 
-    LoginFindAllResponseBody:
-      allOf:
-        - $ref: '#/components/schemas/StatusResponseType'
-        - $ref: '#/components/schemas/PaginationResponseType'
-        - type: object
-          properties:
-            data:
-              type: array
-              items:
-                $ref: '#/components/schemas/LoginSaveResponseType'
+    PersonagemPageResponseType:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/StatusResponseType'
+        pagination:
+          $ref: '#/components/schemas/paginationType'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonagemType'
 
-    ExceptionResponseBody:
+    PersonagemExceptionResponseType:
       type: object
       description: Modelo padrão para erros
       properties:
         status:
           $ref: '#/components/schemas/StatusResponseType'
         details:
-          type: string
+          type: array
+          items:
+            type: string
           description: Detalhes do erro ocorrido.
-          example: "Senha deve ter no mínimo 8 caracteres"
+          example: ["Mensagem de erro1"]
 
     # [TYPE]
     StatusResponseType:
-      type: object
-      description: Wrapper genérico para respostas com status
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusType'
-
-    StatusType:
       type: object
       description: Wrapper genérico para respostas com status
       properties:
@@ -322,107 +399,30 @@ components:
         message:
           $ref: '#/components/schemas/MessageEnum'
 
-    LoginSaveResponseType:
-      type: object
-      description: Dados do login retornados pela API.
-      properties:
-        login:
-          $ref: '#/components/schemas/login-field'
-        createdAt:
-          $ref: '#/components/schemas/date-create-field'
-        updatedAt:
-          $ref: '#/components/schemas/date-update-field'
-
-    PaginationResponseType:
+    paginationType:
       type: object
       description: Modelo padrão para erros
       properties:
-        pagination:
-          $ref: '#/components/schemas/PaginationType'
-
-
-    PaginationType:
-      type: object
-      description: Detalhes do erro ocorrido.
-      properties:
-        TotalItensList:
-          $ref: '#/components/schemas/total-itens-list-field'
-        CurrentPage:
-          $ref: '#/components/schemas/current-page-field'
-        ItemsPerPage:
-          $ref: '#/components/schemas/items-per-page-field'
-        TotalPages:
-          $ref: '#/components/schemas/total-pages-field'
-        HasNextPage:
-          $ref: '#/components/schemas/has-next-page-field'
-
-
-    # [FIELDS]
-
-    # FIELD - BOOLEAN
-    has-next-page-field:
-      type: boolean
-      description: Se existe próxima página.
-      example: true
-
-    # [FIELD] - INTEGER
-    total-itens-list-field:
-      type: integer
-      description: Total de itens da lista.
-      example: 123
-
-    current-page-field:
-      type: integer
-      description: Página atual (0-based).
-      example: 0
-
-    items-per-page-field:
-      type: integer
-      description: Itens por página.
-      example: 20
-
-    total-pages-field:
-      type: integer
-      description: Total de páginas disponíveis.
-      example: 7
-
-    SizeField:
-      type: integer
-      minimum: 1
-      default: 20
-
-    PageField:
-      type: integer
-      minimum: 0
-      default: 0
-
-    # FIELD - STRING
-    login-field:
-      type: string
-      description: Nome de usuário (login).
-      minLength: 1
-      maxLength: 150
-      example: usuario123
-
-    password-field:
-      type: string
-      description: Senha do usuário.
-      minLength: 1
-      maxLength: 150
-      example: senha123
-
-    # FIELD - DATE
-    date-create-field:
-      type: string
-      format: date
-      description: Data de criação do login
-      example: "2025-06-27T15:00:00Z"
-
-    date-update-field:
-      type: string
-      format: date
-      description: Data de atualização do login
-      example: "2025-06-27T15:05:00Z"
+        quantity:
+          type: integer
+          description: Total de itens da lista.
+          example: 123
+        currentPage:
+          type: integer
+          description: Página atual (0-based).
+          example: 0
+        itemsPerPage:
+          type: integer
+          description: Itens por página.
+          example: 20
+        totalPages:
+          type: integer
+          description: Total de páginas disponíveis.
+          example: 7
+        hasNextPage:
+          type: boolean
+          description: Se existe próxima página.
+          example: true
 
     # [ENUM]
     StatusEnum:

@@ -9,14 +9,14 @@ paths: { }
 components:
   schemas:
 
-    ExampleClassEntity:
+    ExampleClassModel:
       type: object
       properties:
         class:
           type: object
           x-data-object: true # true para [model, type, entity, dto]
           x-header:
-            imports: [ 'jakarta.persistence.Entity' ] #
+            imports: [ 'jakarta.persistence.Entity' ] # add imports
             java-doc: [ ] # use aspas simples
             annotations: ['@Entity'] # use aspas simples
             line:
@@ -24,18 +24,19 @@ components:
               after-name: ~
           x-attributes:
             - attribute:
-              - '/** Descrição do campo 1 */'
-              - '@Getter'
-              - '@Setter'
-              - 'private String prop_1;'
+                - '/** Descrição do campo 1 */'
+                - '@Getter'
+                - '@Setter'
+                - 'private String prop_1;'
             - attribute:
-              - '/** Descrição do campo 2 */'
-              - '@Getter'
-              - '@Setter'
-              - 'private String prop_2;'
-          x-metodes:
-            - metode:
+                - '/** Descrição do campo 2 */'
+                - '@Getter'
+                - '@Setter'
+                - 'private String prop_2;'
+          x-methods:
+            - method:
                 - '/** Descrição do método*/'
-                - 'public void voidMetode(){'
+                - 'public void method(){'
                 - '}'
+
 
