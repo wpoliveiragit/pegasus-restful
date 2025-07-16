@@ -34,6 +34,75 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class PersonagensController implements PersonagensApiDelegate {
 
+    /* !:[PAGINACAO]
+     * - totalItems: quantidade de itens retornados na pagina.
+     * - currentPage: pagina solicitada
+     * - totalPages: quantidade total de paginas referente a quantidade de itens solicitado na paginação
+     * */
+
+    /* !: FIND ALL (PAGE)
+     * [200]: OK
+     * - [   0]: retorno esperado
+     * - [   1]: lista vazia
+     * - [   2]: paginação fora do limite 'máximo' (retorna a lista vazia)
+     *
+     * [400]: BAD REQUEST
+     * - [  -1]: pagina com indice negativa ('Invalid pagination parameters: page: x)
+     * - [  -2]: pagina com tamanho negativo ('Invalid pagination parameters: size: x')
+     *
+     * [500]: INTERNAL SERVER ERRO
+     * - [-900]: informar a mensagem de erro'
+     * */
+
+    /* !: FIND BY ID
+     * [200]: OK
+     * - [   0]: retorno esperado
+     *
+     * [404]: NOT FOUND
+     * - [  -3]: item não encontrado (Item with ID 1 not found.)
+     *
+     * [500]: INTERNAL SERVER ERRO
+     * - [-900]: informar a mensagem de erro'
+     * */
+
+    /* !: CREATE
+     * [201]: CREATED
+     * - [   0]: Retorno esperado
+     *
+     * [400]: BAD REQUEST
+     * - [  -4]: O campo 'Nome' é obrigatório
+     * - [  -5]: O campo 'Raça' é obrigatório
+     * - [  -6]: O campo 'Classe' é obrigatório
+     *
+     * [500]: INTERNAL SERVER ERRO
+     * - [-900]: informar a mensagem de erro'
+     * */
+
+    /* !: UPDATE
+     * [200]: OK
+     * - [   0]: Retorno esperado
+     *
+     * [404]: Not Found
+     * - [  -7]: Item não encontrado (Item with ID 1 not found.)
+     *
+     * [400]: Bad Request
+     * - [  -8]- Invalid name length.
+     *
+     * [500]: INTERNAL SERVER ERRO
+     * - [-900]: informar a mensagem de erro'
+     * */
+
+    /* !: DELETE
+     * [204]: No Content
+     * - [   0]: Retorno esperado
+     *
+     * [404]: Not Found
+     * - [  -7]: Item não encontrado (Item with ID 1 not found.)
+     *
+     * [500]: INTERNAL SERVER ERRO
+     * - [-900]: informar a mensagem de erro'
+     * */
+
     private final PersonagensService service;
 
     public PersonagensController(PersonagensService service) {
@@ -43,7 +112,7 @@ public class PersonagensController implements PersonagensApiDelegate {
     @Override
     public CompletableFuture<ResponseEntity<PersonagemPageResponseType>> personagensGetPage(
             Integer page, Integer size) {
-
+        // TODO: Testar com size 0 (zero)
         ResponseModel responseModel = service.getPage(RequestModel.builder()
                 .page(PageModel.builder()
                         .index(size)
@@ -52,7 +121,7 @@ public class PersonagensController implements PersonagensApiDelegate {
                 .build());
 
         PaginationModel paginationModel = responseModel.getPage();
-        return HttpUtil.createResponse(HttpStatus.NOT_IMPLEMENTED,
+        return HttpUtil.createResponse(HttpStatus.OK,
                 PersonagemPageResponseType.builder()
                         .status(statusOk())
                         .pagination(PaginationType.builder()
@@ -104,7 +173,7 @@ public class PersonagensController implements PersonagensApiDelegate {
             Integer id, PersonagemUpdateBodyRequestType personagemUpdateBodyRequestType) {
 
         service.update(RequestModel.builder()
-                        .personagem(toPersonagemModel(id, personagemUpdateBodyRequestType))
+                .personagem(toPersonagemModel(id, personagemUpdateBodyRequestType))
                 .build());
         return HttpUtil.createResponse(HttpStatus.NOT_IMPLEMENTED,
                 PersonagemUpdateBodyResponseType.builder()
@@ -117,9 +186,9 @@ public class PersonagensController implements PersonagensApiDelegate {
             Integer id) {
 
         service.delete(RequestModel.builder()
-                        .personagem(PersonagemModel.builder()
-                                .personagemId(id)
-                                .build())
+                .personagem(PersonagemModel.builder()
+                        .personagemId(id)
+                        .build())
                 .build());
         var response = PersonagemDeleteBodyResponseType.builder()
                 .status(statusOk())
@@ -152,7 +221,7 @@ public class PersonagensController implements PersonagensApiDelegate {
                 .build();
     }
 
-    private static PersonagemModel toPersonagemModel(Integer personagemId, PersonagemUpdateBodyRequestType model){
+    private static PersonagemModel toPersonagemModel(Integer personagemId, PersonagemUpdateBodyRequestType model) {
         return PersonagemModel.builder()
                 .personagemId(personagemId)
                 .racaId(model.getRacaId())
