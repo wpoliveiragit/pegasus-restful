@@ -1,0 +1,24 @@
+##
+#   Todos os schemas 'APÓS' serem gerados, passarão por este filtro onde, schema com
+# o nome "Exemplo-Abc" e "Exemplo-Abc" geram a classe 'ExempoAbc.java', é neste
+# arquivo gerado que o filtro será aplicaod.
+#
+# [COMO USAR]
+# 1. Crie um arquivo com qualquer nome em um lugar de sua preferencia ex:
+#      ./resources/openapi/.openapiignore
+#
+# 2. No arquivo pom.xml, adicione em cada 'execute' do plugin do openapi a tag abaixo
+# para atrelar este filtro ao contrato
+#    <ignoreFileOverride>
+#        ${path.resources}/openapi/.openapiignore
+#    </ignoreFileOverride>
+#
+# 3. Adicione as regras. Elas seguem o padrão 'glob pattern' (o mesmo que o .gitignore usa)
+# Exemplo:
+#       '*.log'         → todos os arquivos com extensão .log
+#       'build/'        → ignora a pasta build e seu conteúdo
+#       '**/temp/'      → ignora todas as pastas temp, em qualquer nível
+##
+
+# Ignora qualquer classe gerada termiada com "Ignore"
+**/*Ignore.java

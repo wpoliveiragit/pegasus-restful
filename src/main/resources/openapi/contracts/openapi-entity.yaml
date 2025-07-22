@@ -9,7 +9,7 @@ paths: { }
 components:
   schemas:
 
-    ExampleClassModel:
+    ClassModel-Ignore:
       type: object
       properties:
         class:

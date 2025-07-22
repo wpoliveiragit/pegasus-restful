@@ -5,7 +5,7 @@ info:
   title: Registro de Personagens
   description: >
     API REST para cadastro, consulta, atualização 
-    e exclusão de dados de Personagem.
+    e exclusão de dados de Character.
   termsOfService: https://swagger.io/terms/
   contact:
     email: cadastro@minhaliga.com.br
@@ -17,20 +17,19 @@ externalDocs:
   description: Saiba mais sobre MINHA LIGA em
   url: https://www.minhaliga.com.br
 
-
 servers:
   - url: http://localhost:8080/minhaliga/v1
     description: Servidor local - versão v1.
 
 tags:
-  - name: personagens
+  - name: characters
     description: Gerenciamento de personagens.
 
 paths:
   '/':
     get:
-      tags: [ personagens ]
-      operationId: personagensGetPage
+      tags: [ characters ]
+      operationId: characterGetPage
       summary: Pagina de personagems
       description: Retorna a pagina da lista de personagens cadastrado.
       parameters:
@@ -38,22 +37,35 @@ paths:
         - $ref: '#/components/parameters/size-query'
       responses:
         "200":
-          $ref: '#/components/responses/get-page-response'
+          description: Retorna a pagina solicitada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterPageResponseType'
         "400":
-          $ref: '#/components/responses/bad-request-response'
+          $ref: '#/components/responses/page-bad-request-response'
         "500":
           $ref: '#/components/responses/internal-server-error-response'
 
     post:
-      tags: [ personagens ]
-      operationId: personagensCreate
+      tags: [ characters ]
+      operationId: characterCreate
       summary: Cria um novo personagem
       description: Cria um novo personagem.
       requestBody:
-        $ref: '#/components/requestBodies/create-request'
+        description: Requisição de criação.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CharacterCreateBodyType'
       responses:
         "201":
-          $ref: '#/components/responses/create-response'
+          description: Retorna o elemento criado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterCreateResponseType'
         "400":
           $ref: '#/components/responses/bad-request-response'
         "500":
@@ -64,30 +76,43 @@ paths:
       - $ref: '#/components/parameters/id-path'
 
     get:
-      tags: [ personagens ]
-      operationId: personagensGet
+      tags: [ characters ]
+      operationId: characterGet
       summary: Obtem um personahem pelo id
       description: Consulta detalhes de um personagem existente pelo id.
       responses:
         "200":
-          $ref: '#/components/responses/get-response'
+          description: Retorna o elemento solicitao.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterGetResponseType'
         "400":
-          $ref: '#/components/responses/bad-request-response'
+          $ref: '#/components/responses/get-delete-bad-request-response'
         "404":
           $ref: '#/components/responses/not-found-response'
         "500":
           $ref: '#/components/responses/internal-server-error-response'
 
     put:
-      tags: [ personagens ]
-      operationId: personagensUpdate
+      tags: [ characters ]
+      operationId: characterUpdate
       summary: Atualiza personagem
       description: Atualiza os dados de um personagem.
       requestBody:
-        $ref: '#/components/requestBodies/update-request'
+        description: request de atualização.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CharacterUpdateBodyType'
       responses:
         "200":
-          $ref: '#/components/responses/update-response'
+          description: Retorna o elemento atualizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CharacterUpdateResponseType'
         "400":
           $ref: '#/components/responses/bad-request-response'
         "404":
@@ -96,15 +121,15 @@ paths:
           $ref: '#/components/responses/internal-server-error-response'
 
     delete:
-      tags: [ personagens ]
-      operationId: loginDelete
+      tags: [ characters ]
+      operationId: characterDelete
       summary: Delete login
       description: Remove permanentemente o login informado.
       responses:
         "200":
-          $ref: '#/components/responses/delete-response'
+          description: Retorna o elemento deletado.
         "400":
-          $ref: '#/components/responses/bad-request-response'
+          $ref: '#/components/responses/get-delete-bad-request-response'
         "404":
           $ref: '#/components/responses/not-found-response'
         "500":
@@ -112,7 +137,8 @@ paths:
 
 components:
 
-  parameters: # [Estruturas de query, path, header e cookie]
+  # [ESTRUTURAS :: QUERY, PATH, HEADER E COOKIE]
+  parameters:
     id-path:
       description: Id do personagem.
       required: true
@@ -137,91 +163,52 @@ components:
       schema:
         $ref: '#/components/schemas/size-field'
 
-  requestBodies: # [Estruturas de requisições]
+  # [ESTRUTURAS DE REQUISIÇÕES]
+  # requestBodies:
 
-    create-request:
-      description: Requisição de criação.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PersonagemCreateBodyRequestType'
-
-    update-request:
-      description: request de atualização.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PersonagemUpdateBodyRequestType'
-
-  responses: # [Estruturas de respostas de uma requisições]
-
-    # [RESPONSE.SUCCESS]
-    get-page-response:
-      description: Retorna a pagina solicitada.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PersonagemPageResponseType'
-
-    get-response:
-      description: Retorna o elemento solicitao.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PersonagemGetResponseType'
-
-    create-response:
-      description: Retorna o elemento criado.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PersonagemCreateBodyResponseType'
-
-    update-response:
-      description: Retorna o elemento atualizado.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PersonagemUpdateBodyResponseType'
-
-    delete-response:
-      description: Retorna o elemento deletado.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PersonagemDeleteBodyResponseType'
-
-    # [RESPONSE.FAIL]
+  # [ESTRUTURAS DE RESPOSTAS DE UMA REQUISIÇÕES]
+  responses:
     bad-request-response:
       description: Requisição inválida
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/PersonagemExceptionResponseType'
+            $ref: '#/components/schemas/BadRequestType'
+
+    page-bad-request-response:
+      description: Requisição inválida
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PageBadRequestType'
+
+    get-delete-bad-request-response:
+      description: Requisição inválida
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteBadRequestType'
 
     not-found-response:
       description: Recurso não encontrado
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/PersonagemExceptionResponseType'
+            $ref: '#/components/schemas/NotFoundType'
 
     conflict-response:
       description: Recurso não encontrado
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/PersonagemExceptionResponseType'
+            $ref: '#/components/schemas/ConflictType'
 
     internal-server-error-response:
       description: Erro interno no servidor
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/PersonagemExceptionResponseType'
-
+            $ref: '#/components/schemas/InternalServerEerrorType'
 
   schemas: # Modelos de dados :: field, type, body, request e response
 
@@ -230,238 +217,216 @@ components:
       type: integer
       minimum: 0
       default: 0
+
     id-field:
       type: integer
-      minimum: 1
-      default: 20
 
     page-field:
       type: integer
       minimum: 0
       default: 0
 
-    nome-field:
+    char-name-field:
       type: string
       description: Nome do personagem.
       minLength: 5
       maxLength: 150
-      example: Personagem
+      example: Character
 
-    list-string-field:
+    skils-field:
       type: array
       items:
         type: string
 
-    # [Type]
-    DanoType:
+    # [TYPE :: REQUEST]
+    paginationType:
       type: object
-      description: ''
+      description: 'Modelo padrão para erros.'
       properties:
-        fisico:
+        page:
           type: integer
-        magico:
+          description: 'Página atual (0-based).'
+          example: 10
+        size:
           type: integer
-
-    ResistenciaType:
-      type: object
-      description: ''
-      properties:
-        fisico:
+          description: 'Tamanho da página.'
+          example: 30
+        totalElements:
           type: integer
-        magico:
+          format: int64
+          description: 'Total de registros.'
+          example: 300
+        totalPages:
           type: integer
+          description: 'Total de páginas (com bare no size).'
+          example: 10
+        hasPrevious:
+          type: boolean
+          description: 'Se há página anterior.'
+          example: true
+        hasNext:
+          type: boolean
+          description: 'Se há página posterior.'
+          example: false
 
-    AtributosType:
-      type: object
-      description: ''
-      properties:
-        vida:
-          type: integer
-        dano:
-          $ref: '#/components/schemas/DanoType'
-        resistencia:
-          $ref: '#/components/schemas/ResistenciaType'
-        habilidadeList:
-          $ref: '#/components/schemas/list-string-field'
-
-    PersonagemType:
+    # [TYPE :: REQUEST :: BODY]
+    CharacterCreateBodyType:
       type: object
       properties:
-        personagemId:
+        charName:
+          $ref: '#/components/schemas/char-name-field'
+        charClassId:
           $ref: '#/components/schemas/id-field'
-        racaId:
+        charRaceId:
           $ref: '#/components/schemas/id-field'
-        classeId:
+
+    CharacterUpdateBodyType:
+      type: object
+      properties:
+        charName:
+          $ref: '#/components/schemas/char-name-field'
+        charRaceId:
           $ref: '#/components/schemas/id-field'
-        nome:
-          $ref: '#/components/schemas/nome-field'
-        atributos:
-          $ref: '#/components/schemas/AtributosType'
-
-    UpdatePersonagemType:
-      type: object
-      properties:
-        racaId:
+        charClassId:
           $ref: '#/components/schemas/id-field'
-        classeId:
-          $ref: '#/components/schemas/id-field'
-        nome:
-          $ref: '#/components/schemas/nome-field'
 
-    CreatePersonagemType:
-      type: object
-      properties:
-        nome:
-          $ref: '#/components/schemas/nome-field'
-        classe:
-          type: integer
-        raca:
-          type: integer
-
-    # [REQUEST.BODY]
-    PersonagemCreateBodyRequestType:
-      type: object
-      properties:
-        create:
-          $ref: '#/components/schemas/CreatePersonagemType'
-
-    PersonagemUpdateBodyRequestType:
-      type: object
-      properties:
-        racaId:
-          $ref: '#/components/schemas/id-field'
-        classeId:
-          $ref: '#/components/schemas/id-field'
-        nome:
-          $ref: '#/components/schemas/nome-field'
-
-    # [RESPONSE.BODY]
-    PersonagemDeleteBodyResponseType:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusResponseType'
-
-    PersonagemUpdateBodyResponseType:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusResponseType'
-
-    PersonagemCreateBodyResponseType:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusResponseType'
-        data:
-          $ref: '#/components/schemas/PersonagemType'
-
-    PersonagemGetResponseType:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusResponseType'
-        data:
-          $ref: '#/components/schemas/PersonagemType'
-
-    PersonagemPageResponseType:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/StatusResponseType'
-        pagination:
-          $ref: '#/components/schemas/paginationType'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonagemType'
-
-    PersonagemExceptionResponseType:
+    # [TYPE :: RESPONSE :: GERAL]
+    ExceptionResponseType:
       type: object
       description: Modelo padrão para erros
       properties:
-        status:
-          $ref: '#/components/schemas/StatusResponseType'
         details:
           type: array
           items:
             type: string
           description: Detalhes do erro ocorrido.
-          example: ["Mensagem de erro1"]
+          example: ["Mensagem de erro 1"]
 
-    # [TYPE]
-    StatusResponseType:
+    BadRequestType:
+      allOf:
+        - $ref: '#/components/schemas/ExceptionResponseType'
+        - type: object
+          example:
+            details:
+              - "O campo Name é obrigatório"
+              - "O campo CharClassId é obrigatório"
+              - "O campo CharRaceId é obrigatório"
+
+    PageBadRequestType:
+      allOf:
+        - $ref: '#/components/schemas/ExceptionResponseType'
+        - type: object
+          example:
+            details:
+              - "O campo Page é obrigatório"
+              - "O campo Size é obrigatório"
+
+    DeleteBadRequestType:
+      allOf:
+        - $ref: '#/components/schemas/ExceptionResponseType'
+        - type: object
+          example:
+            details:
+              - "O campo Id do personagem é obrigatório"
+
+    NotFoundType:
+      allOf:
+        - $ref: '#/components/schemas/ExceptionResponseType'
+        - type: object
+          example:
+            details:
+              - "Character 123 não encontrado"
+
+    ConflictType:
+      allOf:
+        - $ref: '#/components/schemas/ExceptionResponseType'
+        - type: object
+          example:
+            details:
+              - "O Character 123 ja existe."
+
+    InternalServerEerrorType:
+      allOf:
+        - $ref: '#/components/schemas/ExceptionResponseType'
+        - type: object
+          example:
+            details:
+              - "Banco de dados off-line"
+
+    # [TYPE :: RESPONSE :: PERSONAGEM]
+    CharacterPageResponseType:
       type: object
-      description: Wrapper genérico para respostas com status
       properties:
-        code:
-          $ref: '#/components/schemas/StatusEnum'
-        message:
-          $ref: '#/components/schemas/MessageEnum'
+        pagination:
+          $ref: '#/components/schemas/paginationType'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CharacterType'
 
-    paginationType:
+    CharacterGetResponseType:
       type: object
-      description: Modelo padrão para erros
       properties:
-        quantity:
-          type: integer
-          description: Total de itens da lista.
-          example: 123
-        currentPage:
-          type: integer
-          description: Página atual (0-based).
-          example: 0
-        itemsPerPage:
-          type: integer
-          description: Itens por página.
-          example: 20
-        totalPages:
-          type: integer
-          description: Total de páginas disponíveis.
-          example: 7
-        hasNextPage:
-          type: boolean
-          description: Se existe próxima página.
-          example: true
+        data:
+          $ref: '#/components/schemas/CharacterType'
 
-    # [ENUM]
-    StatusEnum:
-      type: integer
-      description: Código do erro
-      enum:
-        - 200
-        - 400
-        - 404
-        - 409
-        - 500
-      x-enum-varnames:
-        - OK
-        - BAD_REQUEST
-        - NOT_FOUND
-        - CONFLICT
-        - INTERNAL_SERVER_ERROR
-      example: 200
+    CharacterCreateResponseType:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CharacterType'
 
-    MessageEnum:
-      type: string
-      description: Código do erro
-      enum:
-        - "SUCCESS"
-        - "CREATED"
-        - "Bad request"
-        - "Not found"
-        - "Conflict"
-        - "Internal server error"
-      x-enum-varnames:
-        - OK
-        - CREATE
-        - BAD_REQUEST
-        - NOT_FOUND
-        - CONFLICT
-        - INTERNAL_SERVER_ERROR
-      example: SUCCESS
+    CharacterUpdateResponseType:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/CharacterType'
 
+    # [TYPE :: PERSONAGEM]
+    CharacterType:
+      type: object
+      properties:
+        charId:
+          $ref: '#/components/schemas/id-field'
+        charRaceId:
+          $ref: '#/components/schemas/id-field'
+        charClassId:
+          $ref: '#/components/schemas/id-field'
+        name:
+          $ref: '#/components/schemas/char-name-field'
+        attributes:
+          $ref: '#/components/schemas/AttributesType'
 
+    AttributesType:
+      type: object
+      description: ''
+      properties:
+        life:
+          type: integer
+        damage:
+          $ref: '#/components/schemas/DamageType'
+        resistance:
+          $ref: '#/components/schemas/ResistanceType'
+        skils:
+          $ref: '#/components/schemas/skils-field'
+
+    DamageType:
+      type: object
+      description: ''
+      properties:
+        physical:
+          type: integer
+        magic:
+          type: integer
+
+    ResistanceType:
+      type: object
+      description: ''
+      properties:
+        physical:
+          type: integer
+        magic:
+          type: integer
 
 
 

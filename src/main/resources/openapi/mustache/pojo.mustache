@@ -1,4 +1,3 @@
-package {{package}};
 {{#vars}}
 {{! JAVA-DOC }}
 {{#vendorExtensions.x-header}}
@@ -21,21 +20,18 @@ package {{package}};
 {{/vendorExtensions.java-doc}}
  */
 {{/vendorExtensions.x-header}}
+package {{package}};
 
 {{! IMPORT }}
-// IMPORT - FIXED
 import jakarta.annotation.Generated;
 import java.util.List;
 import java.util.ArrayList;
 {{#vendorExtensions.x-header}}
 {{#imports}}
-
-// IMPORT - 'class.x-header.imports: [ ... ]'
 import {{{.}}};
 {{/imports}}
 {{/vendorExtensions.x-header}}
 {{#vendorExtensions.x-data-object}}
-// IMPORT - 'class.x-data-object: true'
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,21 +43,22 @@ import lombok.RequiredArgsConstructor;
 {{/vendorExtensions.x-data-object}}
 
 {{! ANNOTATION }}
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.14.0")
+@SuppressWarnings({"hiding", "static-method", "unused"})
+
 {{#vendorExtensions.x-data-object}}
-// ANNOTATION - 'class.x-data-object: true'
-@Getter @Setter @Builder(toBuilder = true)
-@AllArgsConstructor @RequiredArgsConstructor
-@EqualsAndHashCode
+@Getter // 'class.x-data-object: true'
+@Setter // 'class.x-data-object: true'
+@Builder(toBuilder = true) // 'class.x-data-object: true'
+@AllArgsConstructor // 'class.x-data-object: true'
+@RequiredArgsConstructor // 'class.x-data-object: true'
+@EqualsAndHashCode // 'class.x-data-object: true'
 {{/vendorExtensions.x-data-object}}
 {{#vendorExtensions.x-header}}
 {{#annotations}}
-//ANNOTATION - 'class.x-header.annotations'
-{{{.}}}
+{{{.}}} // 'class.x-header.annotations'
 {{/annotations}}
-// ANNOTATION - FIXED
 {{/vendorExtensions.x-header}}
-@SuppressWarnings({"hiding", "static-method", "unused"})
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.14.0")
 {{!HEADER}}
 {{#vendorExtensions.x-header}}
 {{#line}}
@@ -75,6 +72,30 @@ import lombok.RequiredArgsConstructor;
 {{/attribute}}
 
 {{/vendorExtensions.x-attributes}}
+{{!Bloco statico da classe}}
+{{#vendorExtensions.x-static-block}}
+    static{
+        {{{.}}}
+    }
+
+{{/vendorExtensions.x-static-block}}
+{{! CONSTRUCTIONS}}
+{{#vendorExtensions.x-constructors}}
+{{#constructor}}
+{{#description}}
+    {{{.}}}
+{{/description}}
+{{#annotation}}
+    {{{.}}}
+{{/annotation}}
+    {{#before-name}}{{before-name}} {{/before-name}}{{classname}}{{after-name}}{
+{{#lines}}
+        {{{.}}}
+{{/lines}}
+    }
+
+{{/constructor}}
+{{/vendorExtensions.x-constructors}}
 {{! METHODS}}
 {{#vendorExtensions.x-methods}}
 {{#method}}

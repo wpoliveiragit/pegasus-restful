@@ -9,6 +9,25 @@ paths: { }
 components:
   schemas:
 
+    RequestEntity-Ignore:
+      type: object
+      properties:
+        class:
+          type: object
+          x-data-object: true
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: public final class
+              after-name: ~
+          x-attributes:
+            - attribute: [ 'private PageModel page;' ]
+            - attribute: [ 'private CharacterModel character;' ]
+          x-methods:
+            - method: [ ]
+
     RequestModel:
       type: object
       properties:
@@ -24,7 +43,7 @@ components:
               after-name: ~
           x-attributes:
             - attribute: [ 'private PageModel page;' ]
-            - attribute: [ 'private PersonagemModel personagem;' ]
+            - attribute: [ 'private CharacterModel character;' ]
           x-methods:
             - method: [ ]
 
@@ -43,7 +62,7 @@ components:
               after-name: ~
           x-attributes:
             - attribute: [ 'private PaginationModel page;' ]
-            - attribute: [ 'private List<PersonagemModel> personagens = new ArrayList<>();' ]
+            - attribute: [ 'private List<CharacterModel> character = new ArrayList<>();' ]
           x-methods:
             - method: [ ]
 
@@ -61,11 +80,24 @@ components:
               begine-name: public final class
               after-name: ~
           x-attributes:
-            - attribute: ['private int quantity;']
-            - attribute: ['private int currentPage;']
-            - attribute: ['private int itemsPerPage;']
-            - attribute: ['private int totalPages;']
-            - attribute: ['private boolean hasNextPage;']
+            - attribute:
+                - /** Página atual (0-based) */
+                - private int page;
+            - attribute:
+                - /** Tamanho da página */
+                - private int size;
+            - attribute:
+                - /** Total de registros */
+                - private long totalElements;
+            - attribute:
+                - /** Total de páginas */
+                - private int totalPages;
+            - attribute:
+                - /** Se há próxima página */
+                - private boolean hasNext;
+            - attribute:
+                - /** Se há página anterior */
+                - private boolean hasPrevious;
           x-methods:
             - method: [ ]
 
@@ -85,14 +117,14 @@ components:
           x-attributes:
             - attribute:
                 - '/** Índice da pagina (inicia por 0)*/'
-                - 'private int index;'
+                - 'private int page;'
             - attribute:
                 - '/** Quantidade de linhas da pagina */'
-                - 'private int lines;'
+                - 'private int size;'
           x-methods:
             - method: [ ]
 
-    PersonagemModel:
+    CharacterModel:
       type: object
       properties:
         class:
@@ -106,15 +138,15 @@ components:
               begine-name: public final class
               after-name: ~
           x-attributes:
-            - attribute: [ 'private int personagemId;' ]
-            - attribute: [ 'private int racaId;' ]
-            - attribute: [ 'private int classeId;' ]
-            - attribute: [ 'private String nome;' ]
-            - attribute: [ 'private AtributosModel atributos;' ]
+            - attribute: [ 'private int charId;' ]
+            - attribute: [ 'private int charRaceId;' ]
+            - attribute: [ 'private int charClassId;' ]
+            - attribute: [ 'private String name;' ]
+            - attribute: [ 'private AttributesModel attributes;' ]
           x-methods:
             - method: [ ]
 
-    AtributosModel:
+    AttributesModel:
       type: object
       properties:
         class:
@@ -128,14 +160,14 @@ components:
               begine-name: public final class
               after-name: ~
           x-attributes:
-            - attribute: [ 'private int vida;' ]
-            - attribute: [ 'private DanoModel dano;' ]
-            - attribute: [ 'private ResistenciaModel resistencia;' ]
-            - attribute: [ 'private List<String> habilidadeList = new ArrayList<>();' ]
+            - attribute: [ 'private int life;' ]
+            - attribute: [ 'private DamageModel damage;' ]
+            - attribute: [ 'private ResistanceModel resistance;' ]
+            - attribute: [ 'private List<String> skils = new ArrayList<>();' ]
           x-methods:
             - method: [ ]
 
-    DanoModel:
+    DamageModel:
       type: object
       properties:
         class:
@@ -149,12 +181,12 @@ components:
               begine-name: public final class
               after-name: ~
           x-attributes:
-            - attribute: [ 'private int fisico;' ]
-            - attribute: [ 'private int magico;' ]
+            - attribute: [ 'private int physical;' ]
+            - attribute: [ 'private int magic;' ]
           x-methods:
             - method: [ ]
 
-    ResistenciaModel:
+    ResistanceModel:
       type: object
       properties:
         class:
@@ -168,22 +200,7 @@ components:
               begine-name: public final class
               after-name: ~
           x-attributes:
-            - attribute: ['private int fisico;']
-            - attribute: ['private int magico;']
+            - attribute: [ 'private int physical;' ]
+            - attribute: [ 'private int magic;' ]
           x-methods:
             - method: [ ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

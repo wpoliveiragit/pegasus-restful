@@ -31,19 +31,20 @@
         <openapi.root-package>br.com.pegasus.swagger</openapi.root-package>
         <openapi.apiPackage>${openapi.root-package}.web.personagens</openapi.apiPackage>
         <openapi.templateDirectory>${path.resources.openapi}/mustache</openapi.templateDirectory>
+        <openapi.ignoreFileOverride>${path.resources.openapi}/.openapiignore</openapi.ignoreFileOverride>
 
         <!-- CONTRATO :: MAIN -->
         <openapi.main.id>contract-main</openapi.main.id>
         <openapi.main.inputSpec>${path.resources.openapi}/openapi.yaml</openapi.main.inputSpec>
-        <openapi.main.modelPackage>${openapi.root-package}.personagens.type</openapi.main.modelPackage>
+        <openapi.main.modelPackage>${openapi.root-package}.character.type</openapi.main.modelPackage>
         <!-- CONTRATO :: MODEL -->
         <openapi.model.id>contract-model</openapi.model.id>
         <openapi.model.inputSpec>${path.resources.openapi}/contracts/openapi-model.yaml</openapi.model.inputSpec>
-        <openapi.model.modelPackage>${openapi.root-package}.personagens.model</openapi.model.modelPackage>
+        <openapi.model.modelPackage>${openapi.root-package}.character.model</openapi.model.modelPackage>
         <!-- CONTRATO :: ENTITY -->
         <openapi.entity.id>contract-entity</openapi.entity.id>
         <openapi.entity.inputSpec>${path.resources.openapi}/contracts/openapi-entity.yaml</openapi.entity.inputSpec>
-        <openapi.entity.modelPackage>${openapi.root-package}.personagens.entity</openapi.entity.modelPackage>
+        <openapi.entity.modelPackage>${openapi.root-package}.character.entity</openapi.entity.modelPackage>
         <!-- CONTRATO :: UTIL -->
         <openapi.util.id>contract-util</openapi.util.id>
         <openapi.util.inputSpec>${path.resources.openapi}/contracts/openapi-util.yaml</openapi.util.inputSpec>
@@ -180,6 +181,7 @@
                         <id>${openapi.main.id}</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
+                            <ignoreFileOverride>${openapi.ignoreFileOverride}</ignoreFileOverride>
                             <inputSpec>${openapi.main.inputSpec}</inputSpec>
                             <modelPackage>${openapi.main.modelPackage}</modelPackage>
                             <templateDirectory>${path.resources.openapi}</templateDirectory> <!-- USA DEFAULT -->
@@ -188,17 +190,6 @@
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                             <skipValidateSpec>true</skipValidateSpec>
                             <generatorName>spring</generatorName>
-
-                            <typeMappings>
-                                <date-time>java.time.LocalDate</date-time>
-                                <custom-date>java.time.LocalDate</custom-date>
-                            </typeMappings>
-                            <importMappings>
-                                <LocalDate>lombok.*</LocalDate>
-                            </importMappings>
-                            <additionalProperties>
-                                <dateLibrary>java8</dateLibrary> <!-- Garante que use java.time.* -->
-                            </additionalProperties>
                             <configOptions>
                                 <async>true</async>
                                 <booleanGetterPrefix>is</booleanGetterPrefix>
@@ -224,6 +215,7 @@
                         <id>${openapi.model.id}</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
+                            <ignoreFileOverride>${openapi.ignoreFileOverride}</ignoreFileOverride>
                             <inputSpec>${openapi.model.inputSpec}</inputSpec>
                             <modelPackage>${openapi.model.modelPackage}</modelPackage>
                             <templateDirectory>${openapi.templateDirectory}</templateDirectory>
@@ -256,6 +248,7 @@
                         <id>${openapi.entity.id}</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
+                            <ignoreFileOverride>${openapi.ignoreFileOverride}</ignoreFileOverride>
                             <inputSpec>${openapi.entity.inputSpec}</inputSpec>
                             <modelPackage>${openapi.entity.modelPackage}</modelPackage>
                             <templateDirectory>${openapi.templateDirectory}</templateDirectory>
@@ -288,6 +281,7 @@
                         <id>${openapi.util.id}</id>
                         <goals><goal>generate</goal></goals>
                         <configuration>
+                            <ignoreFileOverride>${openapi.ignoreFileOverride}</ignoreFileOverride>
                             <inputSpec>${openapi.util.inputSpec}</inputSpec>
                             <modelPackage>${openapi.util.modelPackage}</modelPackage>
                             <templateDirectory>${openapi.templateDirectory}</templateDirectory>

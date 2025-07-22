@@ -9,34 +9,119 @@ paths: { }
 components:
   schemas:
 
-    ExampleClassModel:
-      type: object
+    example-class:
+      type: object # FIXO
       properties:
         class:
-          type: object
-          x-data-object: true # true para [model, type, entity, dto]
+          type: object # FIXO
+          x-data-object: true # true para [DTO, Model, Type e Entity] (add lombok)
           x-header:
-            imports: [ 'jakarta.persistence.Entity' ] # add imports
-            java-doc: [ ] # use aspas simples
-            annotations: ['@Entity'] # use aspas simples
+            imports: [ 'jakarta.persistence.Entity' ]
+            java-doc: [ 'Doc da Example-Class.' ]
+            annotations: [ '@Entity' ]
             line:
-              begine-name: public class
-              after-name: ~
-          x-attributes:
+              begine-name: public class # tudo q for antes do nome da classe
+              after-name: ~ # Todo texto depois do nome ou '~' para ignorar
+          x-attributes: # Lista das linhas do atributo (com ';' na linha de comando)
+            - attribute:
+                - 'private final static String campoEstatico;'
             - attribute:
                 - '/** Descrição do campo 1 */'
                 - '@Getter'
                 - '@Setter'
-                - 'private String prop_1;'
+                - 'private String campo1;'
             - attribute:
                 - '/** Descrição do campo 2 */'
                 - '@Getter'
                 - '@Setter'
-                - 'private String prop_2;'
+                - 'private String campo2;'
+          x-static-block: # bloco de comando da área estática
+            - 'campoEstatico = "blaBlaBla";'
+          x-constructors:
+            - constructor: # lista de contrutores
+                - description: ~ # lista de linhas ou [ ]
+                  annotation: [ ] # lista de anotações ou [ ]
+                  before-name: 'public' # tudo antes do nome
+                  after-name: '(String campo1)' # tudo depois do nome
+                  lines: # lista das linhas do bloco de codigo
+                    - 'this.campo1 = campo1;'
           x-methods:
-            - method:
+            - method: # lista de linhas dos métodos
                 - '/** Descrição do método*/'
                 - 'public void method(){'
                 - '}'
 
+    conflict-exception:
+      type: object # FIXO
+      properties:
+        class:
+          type: object # FIXO
+          x-data-object: false
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: 'public final class'
+              after-name: 'extends RuntimeException'
+          x-attributes: [ ]
+          x-static-block: [ ]
+          x-constructors:
+            - constructor:
+                - description: ~
+                  annotation: [ ]
+                  before-name: 'public'
+                  after-name: '(String msg)'
+                  lines:
+                    - 'super(msg);'
+          x-methods: [ ]
 
+    bad-request-exception:
+      type: object # FIXO
+      properties:
+        class:
+          type: object # FIXO
+          x-data-object: false
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: 'public final class'
+              after-name: 'extends RuntimeException'
+          x-attributes: [ ]
+          x-static-block: [ ]
+          x-constructors:
+            - constructor:
+                - description: ~
+                  annotation: [ ]
+                  before-name: 'public'
+                  after-name: '(String msg)'
+                  lines:
+                    - 'super(msg);'
+          x-methods: [ ]
+
+    not-found-exception:
+      type: object # FIXO
+      properties:
+        class:
+          type: object # FIXO
+          x-data-object: false
+          x-header:
+            imports: [ ]
+            java-doc: [ ]
+            annotations: [ ]
+            line:
+              begine-name: 'public final class'
+              after-name: 'extends RuntimeException'
+          x-attributes: [ ]
+          x-static-block: [ ]
+          x-constructors:
+            - constructor:
+                - description: ~
+                  annotation: [ ]
+                  before-name: 'public'
+                  after-name: '(String msg)'
+                  lines:
+                    - 'super(msg);'
+          x-methods: [ ]
